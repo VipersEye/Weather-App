@@ -37,7 +37,8 @@ module.exports = {
     },
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, 'src')
+            '@': path.resolve(__dirname, 'src'),
+            'styles': path.resolve(__dirname, 'src/assets/styles')
         }
     },
     optimization: optimization(),
@@ -45,6 +46,14 @@ module.exports = {
     plugins: [
         new HTMLWebpackPlugin({
             template: './index.html'
+        }),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, 'src/assets/images/tab-icon.png'),
+                    to: path.resolve(__dirname, 'dist')
+                }
+            ]
         }),
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css'

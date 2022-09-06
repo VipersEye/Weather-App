@@ -1,0 +1,64 @@
+:root.morning {}
+
+:root.afternoon {}
+
+:root.evening {}
+
+:root.night {
+    --container-background: linear-gradient(45deg, #0f183c 0%, #1f2257 33.3%, #1e2d63 66.6%, #33236a 100%);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+    place-items: center;
+
+    background: var(--container-background);
+}
+
+.app {
+    width: 80%;
+    height: 80%;
+
+    display: grid;
+    grid-template-rows: 10rem 1fr;
+    grid-template-columns: 8rem 2fr 1fr;
+
+    border-radius: 3rem;
+    background-color: #030f39;
+}
+
+.header {
+    grid-column: 2 / 3;
+}
+
+.nav {
+    grid-row: 1 / -1;
+}
+
+.maincont {
+    grid-column: 2 / 3;
+}
+
+.forecast {
+    grid-column: 3 / 4;
+    grid-row: 2 / -1;
+}
+
+.header, .nav, .maincont, .forecast {
+    border: 2px solid red;
+}
