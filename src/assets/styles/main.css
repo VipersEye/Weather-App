@@ -1,23 +1,19 @@
-:root.morning {}
-
-:root.afternoon {}
-
-:root.evening {}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,900&display=swap');
 
 :root.night {
-    --container-background: linear-gradient(45deg, #0f183c 0%, #1f2257 33.3%, #1e2d63 66.6%, #33236a 100%);
+    --container-background: linear-gradient(45deg, hsl(228, 60%, 15%) 0%, hsl(237, 47%, 23%) 33.3%, hsl(227, 53%, 25%) 66.6%, hsl(254, 50%, 28%) 100%);
+    --app-background: hsl(227, 90%, 12%);
 }
 
 *, *::before, *::after {
     box-sizing: border-box;
+    
+    margin: 0;
+    padding: 0;
 }
 
-body {
-    margin: 0;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    margin: 0;
+html {
+    font-family: 'Poppins', sans-serif;
 }
 
 .container {
@@ -31,34 +27,78 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .app {
-    width: 80%;
-    height: 80%;
+    width: 70%;
+    height: 90%;
+    padding: 3rem 3rem 3rem 0;
+
+    display: flex;
+
+    border-radius: 2.5rem;
+    background-color: var(--app-background);
+}
+
+.app__inner {
+    flex: 1;
 
     display: grid;
-    grid-template-rows: 10rem 1fr;
-    grid-template-columns: 8rem 2fr 1fr;
-
-    border-radius: 3rem;
-    background-color: #030f39;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 2.5fr 1fr;
+    gap: 3rem;
 }
 
-.header {
-    grid-column: 2 / 3;
-}
+/* nav ======================================= */
 
 .nav {
-    grid-row: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.3rem;
+
+    padding: 0 1.3rem;
 }
 
-.maincont {
-    grid-column: 2 / 3;
+.nav__btn {
+    display: block;
+    padding: .8rem;
+    
+    background: transparent;
+    border: none;
+    border-radius: 0.5rem;
+
+    cursor: pointer;
+
+    transition: all 0.3s linear;
 }
 
-.forecast {
-    grid-column: 3 / 4;
-    grid-row: 2 / -1;
+.nav__btn:hover {
+    background-color: hsl(226, 61%, 16%);
 }
 
-.header, .nav, .maincont, .forecast {
-    border: 2px solid red;
+.nav__btn_active {
+    background-color: hsl(259, 96%, 57%);
+
+    box-shadow: 3px 3px 3px 3px hsl(259, 78%, 33%);
+}
+
+.nav__btn_active:hover {
+    background-color: hsl(259, 96%, 40%);
+    box-shadow: 3px 3px 3px 3px hsl(259, 78%, 25%);
+}
+
+.nav__icon {
+    width: 1.8rem;
+    height: 1.8rem;
+
+    fill: hsl(222, 22%, 62%);
+
+    transition: fill 0.3s linear;
+}
+
+.nav__btn_active .nav__icon {
+    fill: hsl(0, 0%, 100%);
+}
+
+.nav__btn_active:hover .nav__icon {
+    fill: hsl(0, 0%, 80%);
 }
