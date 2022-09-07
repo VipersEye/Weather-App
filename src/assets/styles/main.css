@@ -3,6 +3,19 @@
 :root.night {
     --container-background: linear-gradient(45deg, hsl(228, 60%, 15%) 0%, hsl(237, 47%, 23%) 33.3%, hsl(227, 53%, 25%) 66.6%, hsl(254, 50%, 28%) 100%);
     --app-background: hsl(227, 90%, 12%);
+
+    --nav-btn-hover: hsl(226, 61%, 16%);
+    --nav-btn-active: hsl(259, 96%, 57%);
+    --nav-btn-active-shadow: 3px 3px 3px 3px hsl(259, 78%, 33%);
+    --nav-btn-active-hover: hsl(259, 96%, 40%);
+    --nav-btn-active-hover-shadow: 3px 3px 3px 3px hsl(259, 78%, 25%);
+
+    --nav-icon: hsl(222, 22%, 62%);
+    --nav-icon-active: hsl(0, 0%, 100%);
+    --nav-icon-active-hover: hsl(0, 0%, 80%);
+
+    --header-time-color: hsl(0, 0%, 100%);
+    --header-day-color: hsl(229, 28%, 44%);
 }
 
 *, *::before, *::after {
@@ -72,33 +85,73 @@ html {
 }
 
 .nav__btn:hover {
-    background-color: hsl(226, 61%, 16%);
+    background-color: var(--nav-btn-hover);
 }
 
 .nav__btn_active {
-    background-color: hsl(259, 96%, 57%);
+    background-color: var(--nav-btn-active);
 
-    box-shadow: 3px 3px 3px 3px hsl(259, 78%, 33%);
+    box-shadow: var(--nav-btn-active-shadow);
 }
 
 .nav__btn_active:hover {
-    background-color: hsl(259, 96%, 40%);
-    box-shadow: 3px 3px 3px 3px hsl(259, 78%, 25%);
+    background-color: var(--nav-btn-active-hover);
+    box-shadow: var(--nav-btn-active-hover-shadow);
 }
 
 .nav__icon {
     width: 1.8rem;
     height: 1.8rem;
 
-    fill: hsl(222, 22%, 62%);
+    fill: var(--nav-icon);
 
     transition: fill 0.3s linear;
 }
 
 .nav__btn_active .nav__icon {
-    fill: hsl(0, 0%, 100%);
+    fill: var(--nav-icon-active);
 }
 
 .nav__btn_active:hover .nav__icon {
-    fill: hsl(0, 0%, 80%);
+    fill: var(--nav-icon-active-hover);
+}
+
+/* header =============================== */
+
+.header {
+    grid-column: 1 / 2;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.header__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.header__greating-time {
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--header-time-color);
+}
+
+.header__greetings-day {
+    color: var(--header-day-color);
+    font-size: 1.5rem;
+}
+
+.header__date-time {
+    font-size: 3.3rem;
+    font-weight: 200;
+    text-align: right;
+    text-transform: uppercase;
+    color: var(--header-time-color);
+    line-height: 1.2;
+}
+
+.header__date-day {
+    font-size: 1.2rem;
+    color: var(--header-day-color);
 }
