@@ -2,14 +2,17 @@
 
 :root {
     --fw-light: 200;
+    --fw-extra-light: 300;
     --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semi-bold: 600;
 
     --ff-primary: 'Poppins', sans-serif;
 }
 
 :root.night {
-    --container-background: linear-gradient(45deg, hsl(228, 60%, 15%) 0%, hsl(237, 47%, 23%) 33.3%, hsl(227, 53%, 25%) 66.6%, hsl(254, 50%, 28%) 100%);
-    --app-background: hsl(227, 90%, 12%);
+    --body-bg: linear-gradient(45deg, hsl(228, 60%, 15%) 0%, hsl(237, 47%, 23%) 33.3%, hsl(227, 90%, 12%) 66.6%, hsl(254, 50%, 28%) 100%);
+    --app-bg: hsl(227, 96%, 11%, 0.85);
 
     --nav-btn-hover: hsl(226, 61%, 16%);
     --nav-btn-active: hsl(259, 96%, 57%);
@@ -22,7 +25,16 @@
     --nav-icon-active-hover: hsl(0, 0%, 80%);
 
     --header-time-color: hsl(0, 0%, 100%);
-    --header-day-color: hsl(229, 28%, 44%);
+    --header-day-color: hsl(229, 32%, 41%);
+
+    --weather-bg: hsl(228, 79%, 13.2%);
+    --weather-param-bg: linear-gradient(165deg, hsl(226, 49%, 21%) 0%, hsl(228, 79%, 16.5%) 100%);
+    --weather-icon: hsl(0, 0%, 100%);
+    --weather-param-active: hsl(201, 97%, 55%);
+    --weather-param-text: hsl(0, 0%, 100%);
+    --weather-icon-bg: hsl(227, 96%, 11%);
+    --weather-forecast-inc: hsl(124, 100%, 30%);
+    --weather-forecast-dec: hsl(0, 100%, 30%);
 }
 
 *,
@@ -83,8 +95,41 @@ select {
 }
 
 body {
+    position: relative;
+
     font-family: var(--ff-primary);
     font-size: 100%;
+
+    background: var(--body-bg) ;
+    overflow: hidden;
+}
+
+body::before,
+body::after {
+    content: '';
+    display: block;
+    
+    position: absolute;
+    z-index: -1;
+
+    width: 30rem;
+    height: 30rem;
+
+    border-radius: 50%;
+}
+
+body::before {
+    top: calc(100% - 15rem);
+    left: -20rem;
+    
+    background-color: hsl(254, 50%, 28%, 0.2);
+}
+
+body::after {
+    top: calc(100% - 15rem);
+    right: 0;
+
+    background-color: hsl(237, 47%, 23%, 0.21);
 }
 
 .container {
@@ -94,17 +139,18 @@ body {
     display: grid;
     place-items: center;
 
-    background: var(--container-background);
+    background: transparent;
+    backdrop-filter: blur(40px);
 }
 
 .app {
-    width: 70%;
+    width: 80%;
     height: 90%;
     padding: 3rem 3rem 3rem 0;
 
     display: flex;
 
-    background-color: var(--app-background);
+    background-color: var(--app-bg);
     border-radius: 2.5rem;
 }
 
@@ -120,7 +166,7 @@ body {
 /* nav ======================================= */
 
 .nav {
-    padding: 0 1.3rem;
+    padding: 0 1.5rem;
 }
 
 .nav__list {
@@ -216,4 +262,135 @@ body {
 .header__date-day {
     font-size: 1.2rem;
     color: var(--header-day-color);
+}
+
+/* weather =========================== */
+
+.weather {
+    grid-row: 2 /-1;
+    grid-column: 1 / 2;
+
+    padding: 3rem;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-auto-rows: min-content;
+    column-gap: 2.5rem;
+    row-gap: 2rem;
+
+    background-color: var(--weather-bg);
+    border-radius: 2rem;
+}
+
+.weather__img-container {
+    position: relative;
+
+    grid-row: 1 / 2;
+    grid-column: 1 / -1;
+
+    background: var(--weather-param-bg);
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.weather__img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+
+    transform: translate3d(-50%, -50%, 0);
+}
+
+.weather__param {
+    padding: 1.5rem;
+
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    background: var(--weather-param-bg);
+    border-radius: 1rem;
+}
+
+.weather__param_active {
+    background: var(--weather-param-active);
+}
+
+.weather__param-icon {
+    padding: 0.7rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--weather-icon-bg);
+    border-radius: 0.5rem;
+}
+
+.weather__param_active .weather__param-icon {
+    background-color: hsl(0, 0%, 100%);
+}
+
+.weather__icon {
+    width: 2.2rem;
+    height: 2.2rem;
+
+    fill: var(--weather-icon);
+}
+
+.weather__param_active .weather__icon{
+    fill: var(--weather-param-active);
+}
+
+.weather__param-name {
+    font-size: 1.1rem;
+    color: var(--weather-param-text);
+    font-weight: var(--fw-medium);
+    text-transform: capitalize;
+}
+
+.weather__param-value {
+    font-size: 1.6rem;
+    color: var(--weather-param-text);
+    font-weight: var(--fw-semi-bold);
+}
+
+.weather__param-forecast {
+    margin-left: auto;
+    width: 5rem;
+
+    position: relative;
+
+    font-size: 1.3rem;
+    color: var(--weather-param-text);
+    font-weight: var(--fw-extra-light);
+    text-align: center;
+}
+
+.weather__param-forecast_inc::before,
+.weather__param-forecast_dec::before {
+    content: '';
+
+    position: absolute;
+    left: -2rem;
+
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.weather__param-forecast_inc::before {
+    bottom: 1rem;
+
+    clip-path: polygon(0 100%, 50% 50%, 100% 100%);
+    background-color: var(--weather-forecast-inc);
+}
+
+.weather__param-forecast_dec::before {
+    top: 1rem;
+
+    clip-path: polygon(0 0, 50% 50%, 100% 0);
+    background-color: var(--weather-forecast-dec);
 }

@@ -52,6 +52,10 @@ module.exports = {
                 {
                     from: path.resolve(__dirname, 'src/assets/images/tab-icon.png'),
                     to: path.resolve(__dirname, 'dist')
+                },
+                {
+                    from: path.resolve(__dirname, 'src/assets/images/night.jpg'),
+                    to: path.resolve(__dirname, 'dist')
                 }
             ]
         }),
