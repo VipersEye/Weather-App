@@ -11,6 +11,10 @@
 }
 
 :root.night {
+
+    --text-clr-primary: hsl(0, 0%, 100%);
+    --text-clr-secondary: hsl(230, 29%, 53%);
+
     --body-bg: linear-gradient(45deg, hsl(228, 60%, 15%) 0%, hsl(237, 47%, 23%) 33.3%, hsl(227, 90%, 12%) 66.6%, hsl(254, 50%, 28%) 100%);
     --app-bg: hsl(227, 96%, 11%, 0.85);
 
@@ -24,14 +28,10 @@
     --nav-icon-active: hsl(0, 0%, 100%);
     --nav-icon-active-hover: hsl(0, 0%, 80%);
 
-    --header-time-color: hsl(0, 0%, 100%);
-    --header-day-color: hsl(229, 32%, 41%);
-
     --weather-bg: hsl(228, 79%, 13.2%);
     --weather-param-bg: linear-gradient(165deg, hsl(226, 49%, 21%) 0%, hsl(228, 79%, 16.5%) 100%);
     --weather-icon: hsl(0, 0%, 100%);
     --weather-param-active: hsl(201, 97%, 55%);
-    --weather-param-text: hsl(0, 0%, 100%);
     --weather-icon-bg: hsl(227, 96%, 11%);
     --weather-forecast-inc: hsl(124, 100%, 30%);
     --weather-forecast-dec: hsl(0, 100%, 30%);
@@ -159,7 +159,7 @@ body::after {
 
     display: grid;
     grid-template-rows: auto 1fr;
-    grid-template-columns: 2.5fr 1fr;
+    grid-template-columns: 2fr 1fr;
     gap: 3rem;
 }
 
@@ -241,18 +241,18 @@ body::after {
 
 .header__greating-time {
     font-size: 2rem;
-    color: var(--header-time-color);
+    color: var(--text-clr-primary);
     font-weight: var(--fw-regular);
 }
 
 .header__greetings-day {
     font-size: 1.5rem;
-    color: var(--header-day-color);
+    color: var(--text-clr-secondary);
 }
 
 .header__date-time {
     font-size: 3.3rem;
-    color: var(--header-time-color);
+    color: var(--text-clr-primary);
     line-height: 1.2;
     font-weight: var(--fw-light);
     text-align: right;
@@ -261,7 +261,7 @@ body::after {
 
 .header__date-day {
     font-size: 1.2rem;
-    color: var(--header-day-color);
+    color: var(--text-clr-secondary);
 }
 
 /* weather =========================== */
@@ -346,14 +346,14 @@ body::after {
 
 .weather__param-name {
     font-size: 1.1rem;
-    color: var(--weather-param-text);
+    color: var(--text-clr-primary);
     font-weight: var(--fw-medium);
     text-transform: capitalize;
 }
 
 .weather__param-value {
     font-size: 1.6rem;
-    color: var(--weather-param-text);
+    color: var(--text-clr-primary);
     font-weight: var(--fw-semi-bold);
 }
 
@@ -364,7 +364,7 @@ body::after {
     position: relative;
 
     font-size: 1.3rem;
-    color: var(--weather-param-text);
+    color: var(--text-clr-primary);
     font-weight: var(--fw-extra-light);
     text-align: center;
 }
@@ -393,4 +393,284 @@ body::after {
 
     clip-path: polygon(0 0, 50% 50%, 100% 0);
     background-color: var(--weather-forecast-dec);
+}
+
+/* forecast =========================== */
+
+.forecast {
+    grid-column: 2 / 3;
+    grid-row: 1 / -1;
+
+    padding: 3rem 3rem;
+
+    background-color: var(--weather-bg);
+    border-radius: 2rem;
+}
+
+.forecast__header {
+    margin-bottom: 2rem;
+
+    font-size: 2.5rem;
+    color: var(--text-clr-primary);
+    font-weight: var(--fw-regular);
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.forecast__content {
+    margin-bottom: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.forecast__item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.forecast__img {
+    width: 3rem;
+    height: 3rem;
+}
+
+.forecast__day {
+    font-size: 1.2rem;
+    color: var(--text-clr-secondary);
+}
+
+.forecast__weather {
+    font-size: 1.3rem;
+    color: var(--text-clr-primary);
+}
+
+.forecast__temp {
+    margin-left: auto;
+
+    font-size: 1.4rem;
+    color: var(--text-clr-primary);
+    font-weight: var(--fw-medium);
+}
+
+.forecast__chart {
+    position: relative;
+
+    height: 6rem;
+
+    overflow: hidden;
+}
+
+.forecast__circle {
+    position: absolute;
+    left: 50%;
+
+    border-radius: 50%;
+}
+
+.forecast__circle_dashed,
+.forecast__circle_current {
+    top: 1.5rem;
+
+    width: 40rem;
+    height: 40rem;
+
+    transform: translateX(-50%);
+}
+
+.forecast__circle_dashed {
+    border: 3px dashed var(--text-clr-secondary);
+}
+
+.forecast__circle_current {
+    background-image: linear-gradient(-100deg, transparent 50%, white 50%);
+}
+
+.forecast__circle_inner {
+    top: 50%;
+    z-index: 1000;
+
+    width: 39.7rem;
+    height: 39.7rem;
+
+    background-color: var(--weather-bg);
+
+    transform: translate3d(-50%, -50%, 0);
+}
+
+.forecast__chart-moon {
+    position: absolute;
+    top: .4rem;
+    left: 50%;
+    z-index: 1;
+
+    transform: translateX(-170%);
+}
+
+.icon-moon {
+    width: 3rem;
+    height: 3rem;
+
+    fill: hsl(43, 99%, 30%);
+    background-color: hsl(40, 85%, 57%);
+    border-radius: 50%;
+
+    animation-name: moon-rotate;
+    animation-duration: 40s;
+    animation-iteration-count: infinite;
+}
+
+.icon-star {
+    position: absolute;
+    z-index: 10;
+
+    width: 0.8rem;
+    height: 0.8rem;
+    
+    fill: hsl(0, 0%, 100%);
+    opacity: 0;
+
+    animation-iteration-count: infinite;
+}
+
+.icon-star:nth-of-type(1) {
+    top: -0.5rem;
+    left: -0.5rem;
+
+    animation-name: star-1;
+    animation-duration: 3s;
+}
+
+.icon-star:nth-of-type(2) {
+    top: 2rem;
+    left: 0.4rem;
+
+    animation-name: star-2;
+    animation-duration: 3s;
+    animation-delay: 5s;
+}
+
+.icon-star:nth-of-type(3) {
+    top: 0.5rem;
+    left: 0.9rem;
+
+    animation-name: star-3;
+    animation-duration: 3s;
+    animation-delay: 1s;
+}
+
+.icon-star:nth-of-type(4) {
+    top: 2.5rem;
+    left: 2.5rem;
+
+    animation-name: star-4;
+    animation-duration: 3s;
+    animation-delay: 4s;
+}
+
+.icon-star:nth-of-type(5) {
+    top: 0rem;
+    left: 1.9rem;
+
+    animation-name: star-5;
+    animation-duration: 3s;
+    animation-delay: 2s;
+}
+
+.forecast__daylight-times {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.forecast__time {
+    font-size: 1.2rem;
+    color: var(--text-clr-secondary);
+}
+
+
+@keyframes star-1 {
+    from {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    to{
+        top: 0rem;
+        opacity: 0;
+    }
+}
+
+@keyframes star-2 {
+    from {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    to{
+        top: 2.5rem;
+        opacity: 0;
+    }
+}
+
+@keyframes star-3 {
+    from {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    to{
+        top: 1rem;
+        opacity: 0;
+    }
+}
+
+@keyframes star-4 {
+    from {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    to{
+        top: 3rem;
+        opacity: 0;
+    }
+}
+
+@keyframes star-5 {
+    from {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    to{
+        top: 0.5rem;
+        opacity: 0;
+    }
+}
+
+@keyframes moon-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
