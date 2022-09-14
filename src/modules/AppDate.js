@@ -1,6 +1,7 @@
 export default class AppDate {
     constructor() {
-        this.turnOnClockTicking();
+        this.turnOnClock();
+        this.updateAsideDays();
     }
 
     get currentDate() {
@@ -10,7 +11,6 @@ export default class AppDate {
             'Tuesday', 
             'Wednesday', 
             'Thursday', 
-            'Friday', 
             'Friday', 
             'Saturday', 
         ];
@@ -46,7 +46,7 @@ export default class AppDate {
                 daypart = 'night';
                 break;
         }
-        return {
+        let date =  {
             daypart, 
             timeOfDay,
             hours: timeOfDay === 'AM' ? `${'0'.repeat(2 - String(currentDate.getHours()).length )}${currentDate.getHours()}` : currentDate.getHours() - 12 ,
@@ -55,24 +55,51 @@ export default class AppDate {
             date: currentDate.getDate(),
             month: months[currentDate.getMonth()].slice(0,3),
             year: currentDate.getFullYear(),
+
+            days,
+            seconds: currentDate.getSeconds(),
+            milliseconds: currentDate.getMilliseconds()
         };
-        
+        Object.defineProperties(date, {
+            days: {writable: true, enumerable: false, configurable: true},
+            seconds: {writable: true, enumerable: false, configurable: true},
+            milliseconds: {writable: true, enumerable: false, configurable: true}
+        });
+        return date;
     }
 
-    async turnOnClockTicking() {
+    async turnOnClock() {
         let currentMs = (new Date()).getMilliseconds();
         await new Promise( (resolve) => setTimeout(() => {
             resolve();
         }, 1000 - currentMs) );
         let timeDelimiter = document.querySelector('#delimiter');
         timeDelimiter.style.animationName = 'ticking';
-        this.updateTime();
+        this.updateTimeAndDate();
     }
 
-    updateTime() {
+    updateTimeAndDate() {
         for (let key in this.currentDate) {
             document.querySelector(`#${key}`).textContent = this.currentDate[key];
         }
-        setTimeout( () => this.updateTime() ,60000 - (new Date).getSeconds() * 1000);
+        setTimeout( () => this.updateTimeAndDate() ,60000 - this.currentDate.seconds * 1000);
+    }
+
+    updateAsideDays() {
+        let forecastDays = document.querySelectorAll('.forecast__day');
+        let {days, day:today} = this.currentDate;
+        for (let i = days.indexOf(today), j = 0; j < 5; i++, j++) {
+            if (j === 0) {
+                forecastDays[j].textContent = 'Today';
+            } else if (j === 1) {
+                forecastDays[j].textContent = 'Tomorrow';
+            } else {
+                forecastDays[j].textContent = days[i % 7];
+            }
+        }
+
+        setTimeout(() => {
+           this.updateAsideDays(); 
+        }, (86400 - this.currentDate.hours * 3600 - this.currentDate.minutes - this.currentDate.seconds) * 1000 - this.currentDate.milliseconds );
     }
 }
