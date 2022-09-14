@@ -172,12 +172,17 @@
             <div class="app__inner">
                 <header class="header">
                     <div class="header__item">
-                        <h3 class="header__greating-time">Good afternoon, John</h3>
+                        <h3 class="header__greating-time">Good <span id="daypart">afternoon</span>, John</h3>
                         <span class="header__greetings-day">Have a nice day</span>
                     </div>
                     <div class="header__item">
-                        <div class="header__date-time"><time>8:21</time> pm</div>
-                        <span class="header__date-day">Tuesday, 06 Sep 2022</span>
+                        <div class="header__date-time">
+                            <time>
+                                <span id="hours">8</span><span id="delimiter" class="header__time-delimiter">:</span><span id="minutes">21</span>
+                            </time> <span id="timeOfDay">pm</span></div>
+                        <span class="header__date-day">
+                            <span id="day">Tuesday</span>, <span id="date">06</span> <span id="month">Sep</span> <span id="year">2022</span>
+                        </span>
                     </div>
                 </header>
 

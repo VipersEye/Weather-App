@@ -259,6 +259,11 @@ body::after {
     text-transform: uppercase;
 }
 
+.header__time-delimiter {
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
 .header__date-day {
     font-size: 1.2rem;
     color: var(--text-clr-secondary);
@@ -589,6 +594,31 @@ body::after {
     color: var(--text-clr-secondary);
 }
 
+@keyframes ticking {
+    from {
+        opacity: 1;
+    }
+
+    29% {
+        opacity: 1;
+    }
+
+    30% {
+        opacity: 0;
+    }
+
+    70% {
+        opacity: 0;
+    }
+
+    71% {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
 
 @keyframes star-1 {
     from {
