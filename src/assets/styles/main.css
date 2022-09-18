@@ -374,6 +374,10 @@ body::after {
     text-align: center;
 }
 
+.weather__param-forecast_same {
+    visibility: hidden;
+}
+
 .weather__param-forecast_inc::before,
 .weather__param-forecast_dec::before {
     content: '';
@@ -594,7 +598,7 @@ body::after {
     color: var(--text-clr-secondary);
 }
 
-@keyframes ticking {
+/* @keyframes ticking {
     from {
         opacity: 1;
     }
@@ -703,4 +707,4 @@ body::after {
     to {
         transform: rotate(360deg);
     }
-}
+} */
