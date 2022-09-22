@@ -32,25 +32,53 @@ export default class AppWeather {
     }
 
     async updateCurrentWeather() {
-
         let weather = await this.getWeather();
-
         for (let param in weather.difference) {
-            let weatherParameterCurrent = document.querySelector(`#current-${param}`);
-            weatherParameterCurrent.textContent = `${weather.current[param]}${weather.units[param]}`;
+            for (let paramType in weather.difference[param]) {
+                let weatherParameterCurrent = document.querySelector(`#current-${param}-${paramType}`);
+                weatherParameterCurrent.textContent = `${weather.current[param][paramType]}${weather.units[param][paramType]}`;
 
-            let weatherParameterForecast = document.querySelector(`#forecast-${param}`);
-            weatherParameterForecast.textContent = `${weather.difference[param].value}${weather.units[param]}`;
-            weatherParameterForecast.classList.remove('weather__param-forecast_inc', 'weather__param-forecast_dec', 'weather__param-forecast_same');
-            weatherParameterForecast.classList.add(`weather__param-forecast_${weather.difference[param].change}`);
+                let weatherParameterForecast = document.querySelector(`#forecast-${param}-${paramType}`);
+                weatherParameterForecast.textContent = `${weather.difference[param][paramType].value}${weather.units[param][paramType]}`;
+                weatherParameterForecast.classList.remove('weather__param-forecast_inc', 'weather__param-forecast_dec', 'weather__param-forecast_same');
+                weatherParameterForecast.classList.add(`weather__param-forecast_${weather.difference[param][paramType].change}`);
+            }
         }
     }
 
     async getWeather() {
         const extractWeatherData = (data) => {
-            let {main: {temp: temperature, pressure, humidity}, wind: {speed: wind}} = data;
-            temperature = +temperature.toFixed(0);
-            wind = +wind.toFixed(0);
+
+            const degToDirection = (deg) => {
+                switch (true) {
+                    case (deg < 15 || deg >= 345): return 'North';
+                    case (deg >= 15 && deg < 75): return 'Northeast';
+                    case (deg >= 75 && deg < 105): return 'East';
+                    case (deg >= 105 && deg < 165): return 'Southeast';
+                    case (deg >= 165 && deg < 195): return 'South';
+                    case (deg >= 195 && deg < 255): return 'Southwest';
+                    case (deg >= 255 && deg < 285): return 'West';
+                    case (deg >= 285 && deg < 345): return 'Northwest';
+                }
+            };
+
+            let temperature = {
+                temp: +data.main.temp.toFixed(0),
+                temp_min: +data.main.temp_min.toFixed(0),
+                temp_max: +data.main.temp_max.toFixed(0)
+            };
+            let pressure = {
+                pressure: data.main.pressure,
+                sea_level: data.main.sea_level
+            };
+            let wind = {
+                direction: degToDirection(+data.wind.deg),
+                gust: +data.wind.gust.toFixed(0),
+                speed: +data.wind.speed.toFixed(0)
+            };
+            let humidity = {
+                humidity: data.main.humidity
+            };
             return {temperature, pressure, humidity, wind};
         };
         
@@ -58,10 +86,23 @@ export default class AppWeather {
 
         let weather = {
             units: {
-                temperature: '°',
-                pressure: ' hpa',
-                humidity: '%',
-                wind: ' m/s'
+                temperature: {
+                    temp: '°',
+                    temp_min: '°',
+                    temp_max: '°'
+                },
+                pressure: {
+                    pressure: ' hpa',
+                    sea_level: ' hpa'
+                },
+                humidity: {
+                   humidity: '%'
+                },
+                wind: {
+                    speed: ' m/s',
+                    direction: '',
+                    gust: ' m/s'
+                }
             },
             current: extractWeatherData(currentWeatherData),
             forecast: forecastWeatherData.list,
@@ -70,10 +111,20 @@ export default class AppWeather {
         };
 
         for (let param in weather.current) {
-            weather.difference[param] = {
-                value: Math.abs(weather.current[param] - weather.closest[param]).toFixed(0),
-                change: weather.current[param] > weather.closest[param] ? 'dec' : weather.current[param] < weather.closest[param] ? 'dec' : 'same' ,
-            };
+            weather.difference[param] = {};
+            for (let paramType in weather.current[param]) {
+                if (paramType === 'direction') {
+                    weather.difference[param][paramType] = {
+                        value: weather.closest[param][paramType]
+                    };
+                    continue;
+                }
+                weather.difference[param][paramType] = {
+                    value: Math.abs(weather.current[param][paramType] - weather.closest[param][paramType]).toFixed(0),
+                    change: weather.closest[param][paramType] > weather.current[param][paramType] ? 'inc' :
+                    weather.closest[param][paramType] < weather.current[param][paramType] ? 'dec' : 'same' ,
+                };
+            }
         }
 
         return weather;
@@ -86,7 +137,6 @@ export default class AppWeather {
             let responseWeather = await fetch(urlWeather);
             let weather = await responseWeather.json();
 
-            console.log(weather);
             if (weather.message === 'city not found') throw new Error(weather.message);
 
             let urlForecast = this.generateFetchURL('forecast');
@@ -97,7 +147,6 @@ export default class AppWeather {
 
         } catch (error) {
 
-            console.log(error);
             if (error.message === 'city not found') {
                 alert(`${this.city} not found, try again`);
                 this.city = prompt();
