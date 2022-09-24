@@ -88,7 +88,7 @@ export default class AppDate {
     updateAsideDays() {
         let forecastDays = document.querySelectorAll('.forecast__day');
         let {days, day:today} = this.currentDate;
-        for (let i = days.indexOf(today), j = 0; j < 5; i++, j++) {
+        for (let i = days.indexOf(today), date = new Date(), j = 0; j < 5; i++, j++, date.setDate(date.getDate() + 1)) {
             if (j === 0) {
                 forecastDays[j].textContent = 'Today';
             } else if (j === 1) {
@@ -96,6 +96,7 @@ export default class AppDate {
             } else {
                 forecastDays[j].textContent = days[i % 7];
             }
+            forecastDays[j].closest('.forecast__item').setAttribute('id', `forecast-${date.getDate()}`);
         }
 
         setTimeout(() => {
