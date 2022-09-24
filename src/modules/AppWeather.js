@@ -23,68 +23,147 @@ export default class AppWeather {
         } );        
     }
 
-    updateWeather() {
-        this.updateCurrentWeather();
+    async updateWeather() {
+        let weatherRowData = await this.getWeather();
+        let weatherData = this.reduceWeatherData(weatherRowData);
+        this.updateCurrentWeather(weatherData);
+        this.updateForecastWeather(weatherData);
         
         setTimeout(() => {
             this.updateWeather();
         }, 3 * 3600 * 1000);
     }
 
-    async updateCurrentWeather() {
-        let weather = await this.getWeather();
-        for (let param in weather.difference) {
-            for (let paramType in weather.difference[param]) {
-                let weatherParameterCurrent = document.querySelector(`#current-${param}-${paramType}`);
-                weatherParameterCurrent.textContent = `${weather.current[param][paramType]}${weather.units[param][paramType]}`;
+    async updateForecastWeather(weatherData) {
+        document.querySelector('#current-weather').textContent = weatherData.current.weather;
+        let forecastDaylight = document.querySelector('.forecast__daylight-times');
+        if (new Date() < weatherData.current.time.sunrise) {
+            forecastDaylight.children[0].textContent = `Sunset ${weatherData.current.time.sunset.toLocaleTimeString('en-US').replace(/:\d\d /g, ' ')}`;
+            forecastDaylight.children[1].textContent = `Sunrise ${weatherData.current.time.sunrise.toLocaleTimeString('en-US').replace(/:\d\d /g, ' ')}`;
+        }
 
-                let weatherParameterForecast = document.querySelector(`#forecast-${param}-${paramType}`);
-                weatherParameterForecast.textContent = `${weather.difference[param][paramType].value}${weather.units[param][paramType]}`;
-                weatherParameterForecast.classList.remove('weather__param-forecast_inc', 'weather__param-forecast_dec', 'weather__param-forecast_same');
-                weatherParameterForecast.classList.add(`weather__param-forecast_${weather.difference[param][paramType].change}`);
-            }
+        for (let dayData of weatherData.forecast) {
+            let day = document.querySelector(`#forecast-${dayData.date}`);
+            if (day === null) continue;
+            
+            let dayWeather = day.querySelector('.forecast__weather');
+            let dayTemp = day.querySelector('.forecast__temp');
+            let dayWeatherIcon = day.querySelector('.forecast__img');
+
+            dayWeather.textContent = dayData.avgWeather;
+            dayWeatherIcon.setAttribute('src', `./${dayData.avgWeather.toLowerCase()}.svg`);
+            dayTemp.textContent = `${dayData.avgTempDay}${weatherData.units.temperature.temp}/${dayData.avgTempNight}${weatherData.units.temperature.temp}`;
         }
     }
 
-    async getWeather() {
-        const extractWeatherData = (data) => {
+    updateCurrentWeather(weatherData) {
+        for (let param in weatherData.difference) {
+            for (let paramType in weatherData.difference[param]) {
+                let weatherParameterCurrent = document.querySelector(`#current-${param}-${paramType}`);
+                weatherParameterCurrent.textContent = `${weatherData.current[param][paramType]}${weatherData.units[param][paramType]}`;
+
+                let weatherParameterForecast = document.querySelector(`#forecast-${param}-${paramType}`);
+                weatherParameterForecast.textContent = `${weatherData.difference[param][paramType].value}${weatherData.units[param][paramType]}`;
+                weatherParameterForecast.classList.remove(
+                    'weather__param-forecast_inc', 
+                    'weather__param-forecast_dec', 
+                    'weather__param-forecast_same'
+                );
+                weatherParameterForecast.classList.add(`weather__param-forecast_${weatherData.difference[param][paramType].change}`);
+            }
+        }        
+    }
+
+    reduceWeatherData(weatherRowData) {
+        const reduceCurrentData = (weatherFullData) => {
 
             const degToDirection = (deg) => {
                 switch (true) {
                     case (deg < 15 || deg >= 345): return 'North';
-                    case (deg >= 15 && deg < 75): return 'Northeast';
+                    case (deg >= 15 && deg < 75): return 'NE';
                     case (deg >= 75 && deg < 105): return 'East';
-                    case (deg >= 105 && deg < 165): return 'Southeast';
+                    case (deg >= 105 && deg < 165): return 'SE';
                     case (deg >= 165 && deg < 195): return 'South';
-                    case (deg >= 195 && deg < 255): return 'Southwest';
+                    case (deg >= 195 && deg < 255): return 'SW';
                     case (deg >= 255 && deg < 285): return 'West';
-                    case (deg >= 285 && deg < 345): return 'Northwest';
+                    case (deg >= 285 && deg < 345): return 'NW';
                 }
             };
 
             let temperature = {
-                temp: +data.main.temp.toFixed(0),
-                temp_min: +data.main.temp_min.toFixed(0),
-                temp_max: +data.main.temp_max.toFixed(0)
+                temp: +weatherFullData.main.temp.toFixed(0),
+                temp_min: +weatherFullData.main.temp_min.toFixed(0),
+                temp_max: +weatherFullData.main.temp_max.toFixed(0)
             };
             let pressure = {
-                pressure: data.main.pressure,
-                sea_level: data.main.sea_level
+                pressure: weatherFullData.main.pressure,
+                sea_level: weatherFullData.main.sea_level
             };
             let wind = {
-                direction: degToDirection(+data.wind.deg),
-                gust: +data.wind.gust.toFixed(0),
-                speed: +data.wind.speed.toFixed(0)
+                direction: degToDirection(+weatherFullData.wind.deg),
+                gust: +weatherFullData.wind.gust?.toFixed(0) ?? 0,
+                speed: +weatherFullData.wind.speed.toFixed(0)
             };
             let humidity = {
-                humidity: data.main.humidity
+                humidity: weatherFullData.main.humidity
             };
             return {temperature, pressure, humidity, wind};
         };
-        
-        let {weather: currentWeatherData, forecast: forecastWeatherData} = await this.requestWeather();
 
-        let weather = {
+        const reduceForecastData = (forecastList) => {
+            const avgTemp = (tempData) => +(tempData.reduce( (sum, temp) => sum + temp ,0) / tempData.length).toFixed(0);
+            const avgWeather = (weatherData) => Object.entries(weatherData.reduce( (obj, weather) => {
+                if (!obj[weather]) obj[weather] = 0;
+                obj[weather]++;
+                return obj;
+            }, {} )).sort((w1 ,w2) => w2[1] - w1[1])[0][0];
+            return forecastList
+                .map( (step) => {
+                    return {
+                        date: new Date(step.dt * 1000),
+                        weather: weatherTypes[step.weather[0].main],
+                        temp: +step.main.temp.toFixed(0)
+                    };
+                } )
+                .reduce( (forecast, step) => {
+                    if (forecast.find((day) => day.date === step.date.getDate()) === undefined) {
+                        forecast.push({
+                            date: step.date.getDate(),
+                            tempDayData: [],
+                            tempNightData: [],
+                            weatherData: []
+                        });
+                    }
+                    let day = forecast.find((day) => day.date === step.date.getDate());
+                    day.weatherData.push(step.weather);
+                    if (step.date.getHours() < 22 && step.date.getHours() > 8) {
+                        day.tempDayData.push(step.temp);
+                    } else {
+                        day.tempNightData.push(step.temp);
+                    }
+                    return forecast;
+                }, [])
+                .map((day) => {
+                    return {
+                        date: day.date,
+                        avgTempDay: avgTemp(day.tempDayData),
+                        avgTempNight: avgTemp(day.tempNightData),
+                        avgWeather: avgWeather(day.weatherData)
+                    };
+                });
+        };
+        
+        let {weather: currentWeatherData, forecast: forecastWeatherData} = weatherRowData;
+        forecastWeatherData.list.unshift(currentWeatherData);
+
+        let weatherTypes = {
+            Clear: 'Clear',
+            Clouds: 'Party Cloudy',
+            Rain: 'Rain',
+            Snow: 'Snow'
+        };
+
+        let weatherData = {
             units: {
                 temperature: {
                     temp: '°',
@@ -104,34 +183,53 @@ export default class AppWeather {
                     gust: ' m/s'
                 }
             },
-            current: extractWeatherData(currentWeatherData),
-            forecast: forecastWeatherData.list,
-            closest: extractWeatherData(forecastWeatherData.list[1]),
-            difference: {}
+            current: reduceCurrentData(currentWeatherData),
+            forecast: reduceForecastData(forecastWeatherData.list),
+            closest: reduceCurrentData(forecastWeatherData.list[1]),
+            difference: {},
         };
 
-        for (let param in weather.current) {
-            weather.difference[param] = {};
-            for (let paramType in weather.current[param]) {
+        Object.defineProperties(
+            weatherData.current, {
+                weather: {
+                    value: weatherTypes[weatherRowData.weather.weather[0].main],
+                    configurable: true,
+                    enumerable: false,
+                    writable: true
+                },
+                time: {
+                    value: {
+                        sunrise: new Date(currentWeatherData.sys.sunrise * 1000),
+                        sunset: new Date(currentWeatherData.sys.sunset * 1000)
+                    },
+                    configurable: true,
+                    enumerable: false,
+                    writable: true
+                }
+            }
+        );
+
+        for (let param in weatherData.current) {
+            weatherData.difference[param] = {};
+            for (let paramType in weatherData.current[param]) {
                 if (paramType === 'direction') {
-                    weather.difference[param][paramType] = {
-                        value: weather.closest[param][paramType]
+                    weatherData.difference[param][paramType] = {
+                        value: weatherData.closest[param][paramType]
                     };
                     continue;
                 }
-                weather.difference[param][paramType] = {
-                    value: Math.abs(weather.current[param][paramType] - weather.closest[param][paramType]).toFixed(0),
-                    change: weather.closest[param][paramType] > weather.current[param][paramType] ? 'inc' :
-                    weather.closest[param][paramType] < weather.current[param][paramType] ? 'dec' : 'same' ,
+                weatherData.difference[param][paramType] = {
+                    value: Math.abs(weatherData.current[param][paramType] - weatherData.closest[param][paramType]).toFixed(0),
+                    change: weatherData.closest[param][paramType] > weatherData.current[param][paramType] ? 'inc' :
+                    weatherData.closest[param][paramType] < weatherData.current[param][paramType] ? 'dec' : 'same' ,
                 };
             }
         }
-
-        return weather;
-
+        console.log(weatherData);
+        return weatherData;
     }
 
-    async requestWeather() {
+    async getWeather() {
         try {
             let urlWeather = this.generateFetchURL('weather');
             let responseWeather = await fetch(urlWeather);
@@ -142,6 +240,9 @@ export default class AppWeather {
             let urlForecast = this.generateFetchURL('forecast');
             let responseForecast = await fetch(urlForecast);
             let forecast = await responseForecast.json();
+
+            console.log(weather);
+            console.log(forecast);
 
             return {weather, forecast};
 
