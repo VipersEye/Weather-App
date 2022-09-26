@@ -51,24 +51,8 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: path.resolve(__dirname, 'src/assets/images/tab-icon.png'),
-                    to: path.resolve(__dirname, 'dist')
-                },
-                {
-                    from: path.resolve(__dirname, 'src/assets/images/night.jpg'),
-                    to: path.resolve(__dirname, 'dist')
-                },
-                {
-                    from: path.resolve(__dirname, 'src/assets/images/party cloudy.svg'),
-                    to: path.resolve(__dirname, 'dist')
-                },
-                {
-                    from: path.resolve(__dirname, 'src/assets/images/rain.svg'),
-                    to: path.resolve(__dirname, 'dist')
-                },
-                {
-                    from: path.resolve(__dirname, 'src/assets/images/sunny.svg'),
-                    to: path.resolve(__dirname, 'dist')
+                    from: path.resolve(__dirname, 'src/assets/images'),
+                    to: path.resolve(__dirname, 'dist/images')
                 }
             ]
         }),

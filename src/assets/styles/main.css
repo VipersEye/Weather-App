@@ -363,8 +363,6 @@ body::after {
 .weather__icon {
     width: 2.2rem;
     height: 2.2rem;
-
-    fill: var(--weather-icon);
 }
 
 .weather__param-name {
@@ -539,7 +537,6 @@ body::after {
     width: 3rem;
     height: 3rem;
 
-    fill: hsl(43, 99%, 30%);
     background-color: hsl(40, 85%, 57%);
     border-radius: 50%;
 
@@ -555,7 +552,6 @@ body::after {
     width: 0.8rem;
     height: 0.8rem;
     
-    fill: hsl(0, 0%, 100%);
     opacity: 0;
 
     animation-iteration-count: infinite;

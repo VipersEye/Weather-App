@@ -27,7 +27,6 @@
         "prefer-arrow-callback": "warn",
         "arrow-spacing": "warn",
         "arrow-parens": "warn",
-        "arrow-body-style": ["warn", "as-needed"],
         "no-confusing-arrow": "error",
         "implicit-arrow-linebreak": "warn",
         "no-unused-vars": "warn",

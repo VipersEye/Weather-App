@@ -51,7 +51,8 @@ export default class AppWeather {
             let dayWeatherIcon = day.querySelector('.forecast__img');
 
             dayWeather.textContent = dayData.avgWeather;
-            dayWeatherIcon.setAttribute('src', `./${dayData.avgWeather.toLowerCase()}.svg`);
+            dayWeatherIcon.setAttribute('src', `./images/icons/weather-icons/${dayData.avgWeather.toLowerCase()}.svg`);
+            dayWeatherIcon.setAttribute('alt', dayData.avgWeather);
             dayTemp.textContent = `${dayData.avgTempDay}${weatherData.units.temperature.temp}/${dayData.avgTempNight}${weatherData.units.temperature.temp}`;
         }
     }
@@ -136,7 +137,7 @@ export default class AppWeather {
                     }
                     let day = forecast.find((day) => day.date === step.date.getDate());
                     day.weatherData.push(step.weather);
-                    if (step.date.getHours() < 22 && step.date.getHours() > 8) {
+                    if (step.date.getHours() < 20 && step.date.getHours() > 8) {
                         day.tempDayData.push(step.temp);
                     } else {
                         day.tempNightData.push(step.temp);
