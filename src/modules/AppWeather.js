@@ -17,10 +17,15 @@ export default class AppWeather {
                 }
             } );
         } ).then( () => {
-            this.updateWeather();
+            this.prepareApp();
         } ).catch( (error) => {
             console.log(`unknown error ${error.code}: ${error.message}`);
-        } );        
+        } );
+    }
+
+    prepareApp() {
+        this.updateWeather();
+        this.setInitialStateChart();
     }
 
     async updateWeather() {
@@ -36,11 +41,6 @@ export default class AppWeather {
 
     async updateForecastWeather(weatherData) {
         document.querySelector('#current-weather').textContent = weatherData.current.weather;
-        let forecastDaylight = document.querySelector('.forecast__daylight-times');
-        if (new Date() < weatherData.current.time.sunrise) {
-            forecastDaylight.children[0].textContent = `Sunset ${weatherData.current.time.sunset.toLocaleTimeString('en-US').replace(/:\d\d /g, ' ')}`;
-            forecastDaylight.children[1].textContent = `Sunrise ${weatherData.current.time.sunrise.toLocaleTimeString('en-US').replace(/:\d\d /g, ' ')}`;
-        }
 
         for (let dayData of weatherData.forecast) {
             let day = document.querySelector(`#forecast-${dayData.date}`);
@@ -73,6 +73,66 @@ export default class AppWeather {
                 weatherParameterForecast.classList.add(`weather__param-forecast_${weatherData.difference[param][paramType].change}`);
             }
         }        
+    }
+
+    async setInitialStateChart() {
+
+        console.log('ini');
+        
+        // let currentTime = new Date(  new Date().setMinutes( new Date().getMinutes() + 458) );
+        // console.log(currentTime);
+        let currentTime = new Date();
+        let weatherRowData = await this.getWeather();
+        let {sunset, sunrise} = this.reduceWeatherData(weatherRowData).current.time;
+
+        if ( currentTime > sunset ) {
+            sunrise = new Date(sunrise.setDate(sunrise.getDate() + 1));
+        } else if (currentTime < sunset && currentTime < sunrise) {
+            sunset = new Date(sunset.setDate(sunset.getDate() - 1));
+        }
+
+        let forecastDaylight = document.querySelector('.forecast__daylight-times');
+        let timeSortedArr = [sunset, sunrise].sort( (time1, time2) => time1 - time2 );
+        let [leftSideBlock, rightSideBlock] = timeSortedArr.map( (time) => `${time.toLocaleTimeString('en-US').includes('AM') ? 'Sunrise' : 'Sunset'} ${time.toLocaleTimeString('en-US').replace(/:\d\d /g, ' ')}`);
+
+        forecastDaylight.children[0].textContent = leftSideBlock;
+        forecastDaylight.children[1].textContent = rightSideBlock;
+        
+        let percentCurrent = +( (currentTime - timeSortedArr[0]) / (timeSortedArr[1] - timeSortedArr[0]) ).toFixed(2);
+        let degCurrent = +getComputedStyle(document.body).getPropertyValue('--chart-deg').slice(0, -3);
+        degCurrent = degCurrent + (67 * percentCurrent);
+        document.documentElement.style.setProperty('--chart-deg', `${degCurrent}deg`);
+
+        // console.log(percentCurrent, degCurrent);
+
+        let percentRest = +(1 - percentCurrent).toFixed(2);
+        let degRest = 67 * percentRest;
+        let timeRest = timeSortedArr[1] - currentTime;
+        let timeStep = timeRest / degRest / 10;
+        const degStep = 0.1;
+
+
+        // console.log(percentRest, degRest, timeRest, timeStep);
+        // console.log(degStep * (timeRest / timeStep) , degRest);
+        // console.log(degRest / degStep * timeStep , timeRest);
+
+        const updateChart = () => {
+            degCurrent += degStep;
+            document.documentElement.style.setProperty('--chart-deg', `${degCurrent}deg`);
+            let timerId = setTimeout(() => {
+                // console.log(new Date());
+                // console.log(timeSortedArr[1]);
+                // console.log(degCurrent);
+                // if (degCurrent > -56.5 && new Date() >= timeSortedArr[1]) {
+                if (degCurrent > -56 && new Date() >= timeSortedArr[1]) {
+                    // console.log(new Date());
+                    clearTimeout(timerId);
+                    this.setInitialStateChart();
+               } else updateChart(); 
+            }, timeStep);
+        };
+
+        updateChart();
     }
 
     reduceWeatherData(weatherRowData) {
@@ -151,6 +211,10 @@ export default class AppWeather {
                         avgTempNight: avgTemp(day.tempNightData),
                         avgWeather: avgWeather(day.weatherData)
                     };
+                }).map((day) => {
+                    if (isNaN(day.avgTempDay)) day.avgTempDay = day.avgTempNight;
+                    else if (isNaN(day.avgTempNight)) day.avgTempNight = day.avgTempDay;
+                    return day;
                 });
         };
         
@@ -226,7 +290,7 @@ export default class AppWeather {
                 };
             }
         }
-        console.log(weatherData);
+        // console.log(weatherData);
         return weatherData;
     }
 
@@ -242,8 +306,8 @@ export default class AppWeather {
             let responseForecast = await fetch(urlForecast);
             let forecast = await responseForecast.json();
 
-            console.log(weather);
-            console.log(forecast);
+            // console.log(weather);
+            // console.log(forecast);
 
             return {weather, forecast};
 
@@ -252,11 +316,11 @@ export default class AppWeather {
             if (error.message === 'city not found') {
                 alert(`${this.city} not found, try again`);
                 this.city = prompt();
-                this.updateWeather();
+                this.prepareApp();
             } else if (error.message === 'Failed to fetch') {
                 alert('Error: check your internet connection and try again');
                 await new Promise( (resolve) => setTimeout( () => resolve() , 60000) );
-                this.updateWeather();
+                this.prepareApp();
             } else {
                 alert('Something went wrong :(');
             }
@@ -272,7 +336,7 @@ export default class AppWeather {
         } else {
             url.searchParams.set('q', this.city);
         }
-        url.searchParams.set('appid', '949e7c85a5e24668e40350ebc260b5ad');
+        url.searchParams.set('appid', 'fdd038ccba156350800cf99a5b383b3b');
         url.searchParams.set('units', 'metric');
         return url;
     };
