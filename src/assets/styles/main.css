@@ -10,6 +10,10 @@
     --ff-primary: 'Poppins', sans-serif;
 
     --chart-deg: -123deg;
+    --message-width: 300px;
+
+    --message-clr-success: hsl(120, 100%, 25%);
+    --message-clr-alert: hsl(0, 100%, 39%);
 }
 
 :root.night {
@@ -428,6 +432,9 @@ body::after {
     grid-column: 2 / 3;
     grid-row: 1 / -1;
 
+    display: flex;
+    flex-direction: column;
+
     padding: 3rem 3rem;
 
     background-color: var(--weather-bg);
@@ -479,6 +486,10 @@ body::after {
     font-size: 1.4rem;
     color: var(--text-clr-primary);
     font-weight: var(--fw-medium);
+}
+
+.forecast__daylight {
+    margin-top: auto;
 }
 
 .forecast__chart {
@@ -615,7 +626,7 @@ body::after {
     color: var(--text-clr-secondary);
 }
 
-/* @keyframes ticking {
+@keyframes ticking {
     from {
         opacity: 1;
     }
@@ -724,7 +735,7 @@ body::after {
     to {
         transform: rotate(360deg);
     }
-} */
+}
 
 .slide-up {
     opacity: 0;
@@ -857,4 +868,172 @@ body::after {
 .modal-city__btn:hover {
     background: var(--nav-btn-active);
     color: #fff;
+}
+
+.message {
+    position: absolute;
+    left: 50%;
+    top: 2rem;
+    
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 0.5rem;
+    width: 4rem;
+    height: 4rem;
+
+    border-radius: 3rem;
+
+    transform: translateX(-50%) scale(0);
+}
+
+.message__success {
+    background-color: var(--message-clr-success);
+}
+
+.message__alert {
+    background-color: var(--message-clr-alert);
+}
+
+.message__img {
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 3rem;
+    height: 3rem;
+
+    border-radius: 50%;
+    background-color: hsl(0, 0%, 85%);
+}
+
+.message__icon {
+    width: 2rem;
+    height: 2rem;
+}
+
+.message__icon_success {
+    fill: var(--message-clr-success);
+}
+
+.message__icon_alert {
+    fill: var(--message-clr-alert);
+}
+
+.message__text {
+    position: relative;
+    top: -1.3rem;
+    z-index: 10;
+
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: var(--fw-medium);
+
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+.show-message {
+    animation-name: show-message;
+    animation-duration: 4s;
+    animation-fill-mode: forwards;
+}
+
+.push {
+    animation-name: push;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+}
+
+.hide {
+    animation-name: hide;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes push {
+
+    30% {
+        width: 4rem;
+        transform: translateX(-50%) scale(1);
+    }
+
+    60% {
+        width: 4rem;
+        transform: translateX(-50%) scale(1);
+    }
+
+
+    to {
+        width: var(--message-width);
+        transform: translateX(-50%) scale(1);
+    }
+
+}
+
+@keyframes hide {
+    from {
+        width: var(--message-width);
+        transform: translateX(-50%) scale(1);
+    }
+
+    40% {
+        width: 4rem;
+        transform: translateX(-50%) scale(1);
+    }
+
+    70% {
+        width: 4rem;
+        transform: translateX(-50%) scale(1);
+    }
+
+    to {
+        width: 4rem;
+        transform: translateX(-50%) scale(0);
+    }
+
+}
+
+@keyframes show-message {
+    from {
+        opacity: 0;
+        visibility: hidden;
+        top: -1.3rem;
+    }
+
+    25% {
+        opacity: 1;
+        visibility: visible;
+        top: 0;
+    }
+
+    75% {
+        opacity: 1;
+        visibility: visible;
+        top: 0;
+    }
+
+    to {
+        opacity: 0;
+        visibility: hidden;
+        top: 1.3rem; 
+    }
+}
+
+@keyframes hide-message {
+    from {
+        opacity: 1;
+        visibility: visible;
+        top: 0;
+    }
+
+    to {
+        opacity: 0;
+        visibility: hidden;
+        top: 1.3rem; 
+    }
 }

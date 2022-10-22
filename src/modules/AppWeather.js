@@ -12,19 +12,48 @@ export default class AppWeather {
                 }, 
                 async (error) => {
                     if (error.code === 1) {
-                        alert('Geolocation denied, please choose your city');
+                        await this.showAlert('alert', 'Geolocation denied, please choose your city');
                         await this.requestCity();
                         resolve();
                     } else {
                         reject(error);
                     }
-                } 
+                }
             );
         } ).then( () => {
             this.startApp();
         } ).catch( (error) => {
             console.log(`unknown error ${error.code}: ${error.message}`);
         } );
+    }
+
+    async showAlert(type, text) {
+        await new Promise( (resolve) => {
+            let font = '500 24px poppins';
+            let canvas = document.createElement('canvas');
+            let context = canvas.getContext('2d');
+            context.font = font;
+            let width = context.measureText(text).width + 96;
+            let formattedWidth = `${Math.ceil(width)}px`;
+
+            let message = document.querySelector('.message');
+            message.classList.remove('message__alert', 'message__success', 'push', 'hide');
+            let messageText = message.querySelector('.message__text');
+            messageText.classList.remove('show-message');
+
+
+            message.classList.add(`message__${type}`, 'push');
+            document.documentElement.style.setProperty('--message-width', formattedWidth);
+            
+            message.addEventListener('animationend', () => {
+                messageText.textContent = text;
+                messageText.classList.add('show-message');
+                messageText.addEventListener('animationend', () => {
+                    message.classList.add('hide');
+                    resolve();
+                });
+            });
+        });
     }
 
     async requestCity() {
@@ -107,7 +136,7 @@ export default class AppWeather {
 
         // console.log('ini');
         
-        // let currentTime = new Date(  new Date().setMinutes( new Date().getMinutes() + 458) );
+        // let currentTime = new Date(  new Date().setMinutes( new Date().getMinutes() - 300) );
         // console.log(currentTime);
         let currentTime = new Date();
         let {sunset, sunrise} = this.weatherData.current.time;
@@ -173,7 +202,7 @@ export default class AppWeather {
             } else {
                 url.searchParams.set('q', this.city);
             }
-            url.searchParams.set('appid', '');
+            url.searchParams.set('appid', '242332545f3bef63dbb3fb922ae08531');
             url.searchParams.set('units', 'metric');
             return url;
         };
@@ -198,15 +227,15 @@ export default class AppWeather {
             } catch (error) {
     
                 if (error.message === 'city not found') {
-                    alert(`${this.city} not found, try again`);
+                    await this.showAlert('alert', `${this.city} not found, try again`);
                     await this.requestCity();
                     this.startApp();
                 } else if (error.message === 'Failed to fetch') {
-                    alert('Error: check your internet connection and try again');
+                    await this.showAlert('alert', 'Check your internet connection and try again');
                     await new Promise( (resolve) => setTimeout( () => resolve() , 60000) );
                     this.startApp();
                 } else {
-                    alert('Something went wrong :(');
+                    this.showAlert('alert', 'Something went wrong :(');
                 }
     
             }
