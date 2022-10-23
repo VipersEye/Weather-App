@@ -97,6 +97,7 @@ export default class AppWeather {
     }
 
     async updateForecastWeather() {
+        document.querySelector('#current-city').textContent = this.weatherData.city;
         document.querySelector('#current-weather').textContent = this.weatherData.current.weather;
 
         for (let dayData of this.weatherData.forecast) {
@@ -335,6 +336,7 @@ export default class AppWeather {
             };
     
             let weatherData = {
+                city: currentWeatherData.name,
                 date: new Date(),
                 units: {
                     temperature: {

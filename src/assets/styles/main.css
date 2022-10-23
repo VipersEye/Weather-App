@@ -441,10 +441,17 @@ body::after {
     border-radius: 2rem;
 }
 
+.forecast__city {
+    font-size: 2.5rem;
+    color: var(--text-clr-secondary);
+    font-weight: var(--fw-medium);
+    text-align: center;
+}
+
 .forecast__header {
     margin-bottom: 2rem;
 
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: var(--text-clr-primary);
     font-weight: var(--fw-regular);
     text-transform: capitalize;
@@ -626,7 +633,7 @@ body::after {
     color: var(--text-clr-secondary);
 }
 
-@keyframes ticking {
+/* @keyframes ticking {
     from {
         opacity: 1;
     }
@@ -735,7 +742,7 @@ body::after {
     to {
         transform: rotate(360deg);
     }
-}
+} */
 
 .slide-up {
     opacity: 0;
