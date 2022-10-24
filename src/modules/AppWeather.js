@@ -37,22 +37,28 @@ export default class AppWeather {
             let formattedWidth = `${Math.ceil(width)}px`;
 
             let message = document.querySelector('.message');
-            message.classList.remove('message__alert', 'message__success', 'push', 'hide');
             let messageText = message.querySelector('.message__text');
-            messageText.classList.remove('show-message');
 
-
-            message.classList.add(`message__${type}`, 'push');
-            document.documentElement.style.setProperty('--message-width', formattedWidth);
-            
-            message.addEventListener('animationend', () => {
+            const animationGenerator = function *() {
                 messageText.textContent = text;
                 messageText.classList.add('show-message');
-                messageText.addEventListener('animationend', () => {
-                    message.classList.add('hide');
-                    resolve();
-                });
+                yield;
+                message.classList.add('hide');
+                yield;
+                message.classList.remove('message__alert', 'message__success', 'push', 'hide');
+                messageText.classList.remove('show-message');
+                resolve();
+                return;
+            };
+
+            let generator = animationGenerator();
+            
+            message.addEventListener('animationend', () => {
+                generator.next();
             });
+
+            document.documentElement.style.setProperty('--message-width', formattedWidth);
+            message.classList.add(`message__${type}`, 'push');            
         });
     }
 
