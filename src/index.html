@@ -68,7 +68,7 @@
     </svg>
 
     <div class="container">
-        <main class="app">
+        <div class="app">
 
             <nav class="nav">
                 <ul class="nav__list" role="list">
@@ -140,136 +140,143 @@
                     </div>
                 </header>
 
-                <section class="weather">
+                <main class="main">
 
-                    <img class="weather__img" src="./images/backgrounds/night.jpg" alt="day time">
+                    <div class="toggler" id="first-toggler"></div>
+                    <div class="toggler" id="second-toggler"></div>
 
-                    <div class="weather__grid">
+                    <section class="weather">
 
-                        <div class="weather__grid-item">
-                            <div class="weather__param-slider" current="0">
-                                
-                                <div class="weather__param">
-                                    <div class="weather__param-icon">
-                                        <img class="weather__icon" src="./images/icons/parameters-icons/wind-speed.svg" alt="wind speed">
+                        <img class="weather__img" src="./images/backgrounds/night.jpg" alt="day time">
+    
+                        <div class="weather__grid">
+    
+                            <div class="weather__grid-item">
+                                <div class="weather__param-slider" current="0">
+                                    
+                                    <div class="weather__param">
+                                        <div class="weather__param-icon">
+                                            <img class="weather__icon" src="./images/icons/parameters-icons/wind-speed.svg" alt="wind speed">
+                                        </div>
+                                        <div class="weather__param-current">
+                                            <div class="weather__param-name">wind</div>
+                                            <div class="weather__param-value" id="current-wind-speed">12 m/s</div>
+                                        </div>
+                                        <div class="weather__param-forecast weather__param-forecast_inc" id="forecast-wind-speed">2 m/s</div>
                                     </div>
-                                    <div class="weather__param-current">
-                                        <div class="weather__param-name">wind</div>
-                                        <div class="weather__param-value" id="current-wind-speed">12 m/s</div>
+    
+                                    <div class="weather__param">
+                                        <div class="weather__param-icon">
+                                            <img class="weather__icon" src="./images/icons/parameters-icons/wind-direction.svg" alt="wind direction">
+                                        </div>
+                                        <div class="weather__param-current">
+                                            <div class="weather__param-name">direction</div>
+                                            <div class="weather__param-value" id="current-wind-direction">south</div>
+                                        </div>
+                                        <div class="weather__param-forecast" id="forecast-wind-direction">north</div>
                                     </div>
-                                    <div class="weather__param-forecast weather__param-forecast_inc" id="forecast-wind-speed">2 m/s</div>
+    
+                                    <div class="weather__param">
+                                        <div class="weather__param-icon">
+                                            <img class="weather__icon" src="./images/icons/parameters-icons/wind-gust.svg" alt="wind gust">
+                                        </div>
+                                        <div class="weather__param-current">
+                                            <div class="weather__param-name">gust</div>
+                                            <div class="weather__param-value" id="current-wind-gust">12 m/s</div>
+                                        </div>
+                                        <div class="weather__param-forecast weather__param-forecast_inc" id="forecast-wind-gust">2 m/s</div>
+                                    </div>
+    
                                 </div>
-
-                                <div class="weather__param">
-                                    <div class="weather__param-icon">
-                                        <img class="weather__icon" src="./images/icons/parameters-icons/wind-direction.svg" alt="wind direction">
+                            </div>                        
+        
+                            <div class="weather__grid-item">
+                                <div class="weather__param-slider" current="0">
+    
+                                    <div class="weather__param">
+                                        <div class="weather__param-icon">
+                                            <img class="weather__icon" src="./images/icons/parameters-icons/temperature-temp.svg" alt="main temperature">
+                                        </div>
+                                        <div class="weather__param-current">
+                                            <div class="weather__param-name">temperature</div>
+                                            <div class="weather__param-value" id="current-temperature-temp">15°</div>
+                                        </div>
+                                        <div class="weather__param-forecast weather__param-forecast_dec" id="forecast-temperature-temp">2°</div>
                                     </div>
-                                    <div class="weather__param-current">
-                                        <div class="weather__param-name">direction</div>
-                                        <div class="weather__param-value" id="current-wind-direction">south</div>
+        
+                                    <div class="weather__param">
+                                        <div class="weather__param-icon">
+                                            <img class="weather__icon" src="./images/icons/parameters-icons/temperature-temp_min.svg" alt="minimum temperature">
+                                        </div>
+                                        <div class="weather__param-current">
+                                            <div class="weather__param-name">min</div>
+                                            <div class="weather__param-value" id="current-temperature-temp_min">13°</div>
+                                        </div>
+                                        <div class="weather__param-forecast weather__param-forecast_dec" id="forecast-temperature-temp_min">2°</div>
                                     </div>
-                                    <div class="weather__param-forecast" id="forecast-wind-direction">north</div>
+        
+                                    <div class="weather__param">
+                                        <div class="weather__param-icon">
+                                            <img class="weather__icon" src="./images/icons/parameters-icons/temperature-temp_max.svg" alt="maximum temperature">
+                                        </div>
+                                        <div class="weather__param-current">
+                                            <div class="weather__param-name">max</div>
+                                            <div class="weather__param-value" id="current-temperature-temp_max">17°</div>
+                                        </div>
+                                        <div class="weather__param-forecast weather__param-forecast_dec" id="forecast-temperature-temp_max">2°</div>
+                                    </div>
+    
                                 </div>
-
-                                <div class="weather__param">
-                                    <div class="weather__param-icon">
-                                        <img class="weather__icon" src="./images/icons/parameters-icons/wind-gust.svg" alt="wind gust">
-                                    </div>
-                                    <div class="weather__param-current">
-                                        <div class="weather__param-name">gust</div>
-                                        <div class="weather__param-value" id="current-wind-gust">12 m/s</div>
-                                    </div>
-                                    <div class="weather__param-forecast weather__param-forecast_inc" id="forecast-wind-gust">2 m/s</div>
-                                </div>
-
                             </div>
-                        </div>                        
+        
+                            <div class="weather__grid-item">
+                                <div class="weather__param-slider" current="0">
     
-                        <div class="weather__grid-item">
-                            <div class="weather__param-slider" current="0">
-
-                                <div class="weather__param">
-                                    <div class="weather__param-icon">
-                                        <img class="weather__icon" src="./images/icons/parameters-icons/temperature-temp.svg" alt="main temperature">
+                                    <div class="weather__param">
+                                        <div class="weather__param-icon">
+                                            <img class="weather__icon" src="./images/icons/parameters-icons/pressure-pressure.svg" alt="pressure ground level">
+                                        </div>
+                                        <div class="weather__param-current">
+                                            <div class="weather__param-name">pressure</div>
+                                            <div class="weather__param-value" id="current-pressure-pressure">995 hpa</div>
+                                        </div>
+                                        <div class="weather__param-forecast weather__param-forecast_dec" id="forecast-pressure-pressure">5 hpa</div>
                                     </div>
-                                    <div class="weather__param-current">
-                                        <div class="weather__param-name">temperature</div>
-                                        <div class="weather__param-value" id="current-temperature-temp">15°</div>
-                                    </div>
-                                    <div class="weather__param-forecast weather__param-forecast_dec" id="forecast-temperature-temp">2°</div>
-                                </div>
     
-                                <div class="weather__param">
-                                    <div class="weather__param-icon">
-                                        <img class="weather__icon" src="./images/icons/parameters-icons/temperature-temp_min.svg" alt="minimum temperature">
+                                    <div class="weather__param">
+                                        <div class="weather__param-icon">
+                                            <img class="weather__icon" src="./images/icons/parameters-icons/pressure-sea_level.svg" alt="pressure sea level">
+                                        </div>
+                                        <div class="weather__param-current">
+                                            <div class="weather__param-name">sea level</div>
+                                            <div class="weather__param-value" id="current-pressure-sea_level">995 hpa</div>
+                                        </div>
+                                        <div class="weather__param-forecast weather__param-forecast_dec" id="forecast-pressure-sea_level">5 hpa</div>
                                     </div>
-                                    <div class="weather__param-current">
-                                        <div class="weather__param-name">min</div>
-                                        <div class="weather__param-value" id="current-temperature-temp_min">13°</div>
-                                    </div>
-                                    <div class="weather__param-forecast weather__param-forecast_dec" id="forecast-temperature-temp_min">2°</div>
-                                </div>
     
-                                <div class="weather__param">
-                                    <div class="weather__param-icon">
-                                        <img class="weather__icon" src="./images/icons/parameters-icons/temperature-temp_max.svg" alt="maximum temperature">
-                                    </div>
-                                    <div class="weather__param-current">
-                                        <div class="weather__param-name">max</div>
-                                        <div class="weather__param-value" id="current-temperature-temp_max">17°</div>
-                                    </div>
-                                    <div class="weather__param-forecast weather__param-forecast_dec" id="forecast-temperature-temp_max">2°</div>
                                 </div>
-
                             </div>
+    
+                            <div class="weather__grid-item">
+                                <div class="weather__param-slider" current="0">
+                                    <div class="weather__param">
+                                        <div class="weather__param-icon">
+                                            <img class="weather__icon" src="./images/icons/parameters-icons/humidity-humidity.svg" alt="humidity">
+                                        </div>
+                                        <div class="weather__param-current">
+                                            <div class="weather__param-name">humidity</div>
+                                            <div class="weather__param-value" id="current-humidity-humidity">98%</div>
+                                        </div>
+                                        <div class="weather__param-forecast weather__param-forecast_inc" id="forecast-humidity-humidity">2%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
     
-                        <div class="weather__grid-item">
-                            <div class="weather__param-slider" current="0">
+                    </section>
 
-                                <div class="weather__param">
-                                    <div class="weather__param-icon">
-                                        <img class="weather__icon" src="./images/icons/parameters-icons/pressure-pressure.svg" alt="pressure ground level">
-                                    </div>
-                                    <div class="weather__param-current">
-                                        <div class="weather__param-name">pressure</div>
-                                        <div class="weather__param-value" id="current-pressure-pressure">995 hpa</div>
-                                    </div>
-                                    <div class="weather__param-forecast weather__param-forecast_dec" id="forecast-pressure-pressure">5 hpa</div>
-                                </div>
-
-                                <div class="weather__param">
-                                    <div class="weather__param-icon">
-                                        <img class="weather__icon" src="./images/icons/parameters-icons/pressure-sea_level.svg" alt="pressure sea level">
-                                    </div>
-                                    <div class="weather__param-current">
-                                        <div class="weather__param-name">sea level</div>
-                                        <div class="weather__param-value" id="current-pressure-sea_level">995 hpa</div>
-                                    </div>
-                                    <div class="weather__param-forecast weather__param-forecast_dec" id="forecast-pressure-sea_level">5 hpa</div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="weather__grid-item">
-                            <div class="weather__param-slider" current="0">
-                                <div class="weather__param">
-                                    <div class="weather__param-icon">
-                                        <img class="weather__icon" src="./images/icons/parameters-icons/humidity-humidity.svg" alt="humidity">
-                                    </div>
-                                    <div class="weather__param-current">
-                                        <div class="weather__param-name">humidity</div>
-                                        <div class="weather__param-value" id="current-humidity-humidity">98%</div>
-                                    </div>
-                                    <div class="weather__param-forecast weather__param-forecast_inc" id="forecast-humidity-humidity">2%</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-
-                </section>
+                </main>
 
                 <aside class="forecast">
                     <h2 class="forecast__city" id="current-city">Boston</h2>
@@ -354,7 +361,7 @@
                 </form>
             </dialog>
 
-        </main>
+        </div>
     </div>
 
     <div class="message">

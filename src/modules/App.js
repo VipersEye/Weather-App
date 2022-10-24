@@ -69,6 +69,40 @@ export default class App {
                 weatherParameter.classList.remove('weather__grid-item_hover_down', 'weather__grid-item_hover_up');
             });
         } );
+
+        const toggleMainContent = (e) => {
+            let navBtn = e.currentTarget;
+            let currentActiveBtn = [...navBtns].find((btn) => btn.classList.contains('nav__btn_active'));
+            currentActiveBtn.classList.remove('nav__btn_active');
+            navBtn.classList.add('nav__btn_active');
+
+            let mainContent = document.querySelector('.main');
+            let mainContentWidth = mainContent.offsetWidth;
+            let mainContentHeight = mainContent.offsetHeight;
+            let togglerRadius = `${Math.ceil((mainContentWidth ** 2 + mainContentHeight ** 2) ** 0.5)}px`;
+            document.documentElement.style.setProperty('--toggler-radius', togglerRadius);
+
+            let blockTogglerOn = document.querySelector('#first-toggler');
+            let blockTogglerOff = document.querySelector('#second-toggler');
+
+            blockTogglerOn.addEventListener('animationend', () => {
+                blockTogglerOff.classList.add('toggler_off');
+            });
+            blockTogglerOff.addEventListener('animationend', () => {
+                blockTogglerOn.classList.remove('toggler_on');
+                blockTogglerOff.classList.remove('toggler_off');
+            });
+            blockTogglerOn.classList.add('toggler_on');
+        };
+
+        let navBtns = document.querySelectorAll('.nav__btn');
+        navBtns.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                if (!e.currentTarget.classList.contains('nav__btn_active')) {
+                    toggleMainContent(e);
+                }
+            });
+        });
     }
 
 }
