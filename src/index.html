@@ -73,7 +73,7 @@
             <nav class="nav">
                 <ul class="nav__list" role="list">
                     <li class="nav__item">
-                        <button type="button" class="nav__btn nav__btn_active">
+                        <button type="button" class="nav__btn nav__btn_active" id="home">
                             <svg class="nav__icon nav__icon_home">
                                 <use xlink:href="#home"></use>
                             </svg>
@@ -113,7 +113,7 @@
                     </li>
 
                     <li class="nav__item">
-                        <button type="button" class="nav__btn">
+                        <button type="button" class="nav__btn" id="settings">
                             <svg class="nav__icon nav__icon_settings">
                                 <use xlink:href="#settings"></use>
                             </svg>
@@ -125,7 +125,7 @@
             <div class="app__inner">
                 <header class="header">
                     <div class="header__item">
-                        <h3 class="header__greating-time">Good <span id="daypart">afternoon</span>, John</h3>
+                        <h3 class="header__greating-time">Good <span id="daypart">afternoon</span>, <span id="username">John</span></h3>
                         <span class="header__greetings-day">Have a nice day</span>
                     </div>
                     <div class="header__item">
@@ -272,6 +272,41 @@
                                 </div>
                             </div>
                             
+                        </div>
+
+                        <div class="weather__settings weather__settings_hidden">
+
+                            <div class="settings__item">
+                                <label class="settings__label" for="input-username">Your name</label>
+                                <input class="settings__input settings__input_text" type="text" name="username" id="input-username" placeholder="John Snow" required minlength="1" maxlength="20" pattern="^([A-Z][a-z]*( [A-Z][a-z]*)*)$">
+                            </div>
+
+                            <div class="settings__item">
+                                <label class="settings__label">Temperature metric</label>
+                                <div class="settings__radio-container">
+                                    <input class="settings__input settings__input_radio" type="radio" name="temp-metric" id="input-metric-kelvin" value="kelvin" checked>
+                                    <input class="settings__input settings__input_radio" type="radio" name="temp-metric" id="input-metric-celsius" value="celsius">
+                                </div>
+                            </div>
+
+                            <div class="settings__item">
+                                <label class="settings__label">Animations</label>
+                                <div class="settings__radio-container">
+                                    <input class="settings__input settings__input_radio" type="radio" name="animations" id="input-animations-on" value="on" checked>
+                                    <input class="settings__input settings__input_radio" type="radio" name="animations" id="input-animations-off" value="off">
+                                </div>
+                            </div>
+
+                            <div class="settings__item">
+                                <label class="settings__label" for="input-volume">Music volume</label>
+                                <input class="settings__input settings__input_range" type="range" name="volume" id="input-volume" value="5" min="0" max="10" step="0.1">
+                            </div>
+                            
+                            <div class="settings__btns">
+                                <button class="settings__btn settings__btn_apply" type="button">Apply</button>
+                                <button class="settings__btn settings__btn_close" type="button">Close</button>
+                            </div>
+
                         </div>
     
                     </section>
