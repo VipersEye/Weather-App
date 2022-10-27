@@ -13,36 +13,29 @@
     --message-width: 300px;
     --toggler-radius: 1100px;
     --range-saturation: 50%;
-
-    --message-clr-success: hsl(120, 100%, 25%);
-    --message-clr-alert: hsl(0, 100%, 39%);
 }
 
 :root.night {
+    --clr-primary-800: hsl(227, 96%, 11%);
+    --clr-primary-700: hsl(228, 85%, 13.3%);
+    --clr-primary-600: hsl(226, 61%, 16%);
+    --clr-primary-500: hsl(248, 66%, 25%);
+    --clr-primary-400: hsl(259, 78%, 33%);
+    --clr-primary-300: hsl(259, 96%, 57%);
+    --clr-primary-200: hsl(230, 29%, 53%);
 
-    --text-clr-primary: hsl(0, 0%, 100%);
-    --text-clr-secondary: hsl(230, 29%, 53%);
+    --clr-neutral-900: hsl(0, 0%, 0%);
+    --clr-neutral-600: hsl(0, 0%, 50%);
+    --clr-neutral-500: hsl(0, 0%, 80%);
+    --clr-neutral-400: hsl(0, 0%, 100%);
 
-    --body-bg: linear-gradient(45deg, hsl(228, 60%, 15%) 0%, hsl(237, 47%, 23%) 33.3%, hsl(227, 90%, 12%) 66.6%, hsl(254, 50%, 28%) 100%);
-    --app-bg: hsl(227, 96%, 11%, 0.85);
+    --clr-positive: hsl(124, 100%, 30%);
+    --clr-negative: hsl(0, 98%, 35%);
 
-    --nav-btn-hover: hsl(226, 61%, 16%);
-    --nav-btn-active: hsl(259, 96%, 57%);
-    --nav-btn-active-shadow: 3px 3px 3px 3px hsl(259, 78%, 33%);
-    --nav-btn-active-hover: hsl(259, 96%, 40%);
-    --nav-btn-active-hover-shadow: 3px 3px 3px 3px hsl(259, 78%, 25%);
-
-    --nav-icon: hsl(222, 22%, 62%);
-    --nav-icon-active: hsl(0, 0%, 100%);
-    --nav-icon-active-hover: hsl(0, 0%, 80%);
-
-    --weather-bg: hsl(228, 79%, 13.2%);
-    --weather-param-bg: linear-gradient(165deg, hsl(226, 49%, 21%) 0%, hsl(228, 79%, 16.5%) 100%);
-    --weather-icon: hsl(0, 0%, 100%);
-    --weather-param-active: hsl(201, 97%, 55%);
-    --weather-icon-bg: hsl(227, 96%, 11%);
-    --weather-forecast-inc: hsl(124, 100%, 30%);
-    --weather-forecast-dec: hsl(0, 100%, 30%);
+    --clr-volume-range: hsl(259, var(--range-saturation), 57%);
+    --clr-decorate-c1: hsl(254, 50%, 28%, 0.2);
+    --clr-decorate-c2: hsl(237, 47%, 23%, 0.21);
+    --clr-moon: hsl(40, 85%, 57%);
 }
 
 *,
@@ -108,7 +101,7 @@ body {
     font-family: var(--ff-primary);
     font-size: 100%;
 
-    background: var(--body-bg) ;
+    background: linear-gradient(45deg, var(--clr-primary-600) 0%, var(--clr-primary-500) 33.3%, var(--clr-primary-800) 66.6%, var(--clr-primary-400) 100%);
     overflow: hidden;
 }
 
@@ -130,14 +123,14 @@ body::before {
     top: calc(100% - 15rem);
     left: -20rem;
     
-    background-color: hsl(254, 50%, 28%, 0.2);
+    background-color: var(--clr-decorate-c1);
 }
 
 body::after {
     top: calc(100% - 15rem);
     right: 0;
 
-    background-color: hsl(237, 47%, 23%, 0.21);
+    background-color: var(--clr-decorate-c2);
 }
 
 .container {
@@ -158,8 +151,9 @@ body::after {
 
     display: flex;
 
-    background-color: var(--app-bg);
     border-radius: 2.5rem;
+    background-color: var(--clr-primary-800);
+    box-shadow: 3px 3px 50px 6px var(--clr-primary-800);
 }
 
 .app__inner {
@@ -203,35 +197,35 @@ body::after {
 }
 
 .nav__btn:hover {
-    background-color: var(--nav-btn-hover);
+    background-color: var(--clr-primary-600);
 }
 
 .nav__btn_active {
-    background-color: var(--nav-btn-active);
+    background-color: var(--clr-primary-300);
 
-    box-shadow: var(--nav-btn-active-shadow);
+    box-shadow: 3px 3px 3px 3px var(--clr-primary-400);
 }
 
 .nav__btn_active:hover {
-    background-color: var(--nav-btn-active-hover);
-    box-shadow: var(--nav-btn-active-hover-shadow);
+    background-color: var(--clr-primary-400);
+    box-shadow: 3px 3px 3px 3px var(--clr-primary-500);
 }
 
 .nav__icon {
     width: 1.8rem;
     height: 1.8rem;
 
-    fill: var(--nav-icon);
+    fill: var(--clr-primary-200);
 
     transition: fill 0.3s linear;
 }
 
 .nav__btn_active .nav__icon {
-    fill: var(--nav-icon-active);
+    fill: var(--clr-neutral-400);
 }
 
 .nav__btn_active:hover .nav__icon {
-    fill: var(--nav-icon-active-hover);
+    fill: var(--clr-neutral-500);
 }
 
 /* header =============================== */
@@ -251,18 +245,18 @@ body::after {
 
 .header__greating-time {
     font-size: 2rem;
-    color: var(--text-clr-primary);
+    color: var(--clr-neutral-400);
     font-weight: var(--fw-regular);
 }
 
 .header__greetings-day {
     font-size: 1.5rem;
-    color: var(--text-clr-secondary);
+    color: var(--clr-primary-200);
 }
 
 .header__date-time {
     font-size: 3.3rem;
-    color: var(--text-clr-primary);
+    color: var(--clr-neutral-400);
     line-height: 1.2;
     font-weight: var(--fw-light);
     text-align: right;
@@ -276,7 +270,7 @@ body::after {
 
 .header__date-day {
     font-size: 1.2rem;
-    color: var(--text-clr-secondary);
+    color: var(--clr-primary-200);
 }
 
 /* main =========================== */
@@ -289,7 +283,7 @@ body::after {
 
     padding: 3rem;
 
-    background-color: var(--weather-bg);
+    background-color: var(--clr-primary-700);
     border-radius: 2rem;
 
     overflow: hidden;
@@ -301,7 +295,7 @@ body::after {
     position: absolute;
     z-index: 100;
 
-    background: var(--weather-bg);
+    background: var(--clr-primary-700);
     border-radius: 50%;
 
     animation-duration: 0.7s;
@@ -372,7 +366,7 @@ body::after {
 .weather__img {
     flex: 1 1 0;
 
-    background: var(--weather-param-bg);
+    background: linear-gradient(165deg, var(--clr-primary-500) 0%, var(--clr-primary-600) 100%);
     border-radius: 1rem;
     overflow: hidden;
 
@@ -397,7 +391,7 @@ body::after {
 
     height: 7rem;
 
-    background: var(--weather-param-bg);
+    background: linear-gradient(165deg, var(--clr-primary-500) 0%, var(--clr-primary-600) 100%);
     border-radius: 1rem;
     cursor: pointer;
 
@@ -405,11 +399,11 @@ body::after {
 }
 
 .weather__grid-item_hover_down {
-    box-shadow: 0px 3px 0px 0px var(--weather-param-active);
+    box-shadow: 0px 3px 0px 0px var(--clr-primary-300);
 }
 
 .weather__grid-item_hover_up {
-    box-shadow: 0px -3px 0px 0px var(--weather-param-active);
+    box-shadow: 0px -3px 0px 0px var(--clr-primary-300);
 }
 
 .weather__param-slider {
@@ -442,7 +436,7 @@ body::after {
     justify-content: center;
     align-items: center;
 
-    background-color: var(--weather-icon-bg);
+    background-color: var(--clr-primary-800);
     border-radius: 0.5rem;
 }
 
@@ -453,14 +447,14 @@ body::after {
 
 .weather__param-name {
     font-size: 1.1rem;
-    color: var(--text-clr-primary);
+    color: var(--clr-neutral-400);
     font-weight: var(--fw-medium);
     text-transform: capitalize;
 }
 
 .weather__param-value {
     font-size: 1.6rem;
-    color: var(--text-clr-primary);
+    color: var(--clr-neutral-400);
     font-weight: var(--fw-semi-bold);
 }
 
@@ -471,7 +465,7 @@ body::after {
     position: relative;
 
     font-size: 1.3rem;
-    color: var(--text-clr-primary);
+    color: var(--clr-neutral-400);
     font-weight: var(--fw-extra-light);
     text-align: center;
 }
@@ -496,14 +490,14 @@ body::after {
     bottom: 1rem;
 
     clip-path: polygon(0 100%, 50% 50%, 100% 100%);
-    background-color: var(--weather-forecast-inc);
+    background-color: var(--clr-positive);
 }
 
 .weather__param-forecast_dec::before {
     top: 1rem;
 
     clip-path: polygon(0 0, 50% 50%, 100% 0);
-    background-color: var(--weather-forecast-dec);
+    background-color: var(--clr-negative);
 }
 
 /* settings =========================== */
@@ -527,7 +521,7 @@ body::after {
 
 .settings__label {
     font-size: 1.4rem;
-    color: var(--text-clr-primary);
+    color: var(--clr-neutral-400);
     font-weight: var(--fw-medium);
 }
 
@@ -542,11 +536,11 @@ body::after {
     
     font-size: 1.2rem;
     line-height: 1;
-    color: var(--text-clr-primary);
+    color: var(--clr-neutral-400);
     text-align: right;
 
     border: 0;
-    border-bottom: 3px solid var(--nav-icon);
+    border-bottom: 3px solid var(--clr-primary-200);
     background-color: transparent;
 
     transition: border 0.3s linear;
@@ -554,7 +548,7 @@ body::after {
 
 .settings__input_text:valid,
 .settings__input_text:focus {
-    border-color: var(--nav-btn-active);
+    border-color: var(--clr-primary-300);
 }
 
 /* input radio =============================== */
@@ -572,11 +566,11 @@ body::after {
     padding: 0.5rem 2rem;
 
     font-size: 1.2rem;
-    color: var(--text-clr-primary);
+    color: var(--clr-neutral-400);
     font-weight: var(--fw-regular);
     line-height: 1;
 
-    border: 4px solid var(--nav-btn-active);
+    border: 4px solid var(--clr-primary-300);
     background-color: transparent;
     cursor: pointer;
 
@@ -584,7 +578,7 @@ body::after {
 }
 
 .settings__input_radio:checked::after {
-    background-color: var(--nav-btn-active);
+    background-color: var(--clr-primary-300);
 }
 
 .settings__input_radio[value="kelvin"]::after,
@@ -633,22 +627,22 @@ body::after {
     height: 25px;
 
     border-radius: 50%;
-    border: 4px solid var(--nav-btn-active);
-    background-color: var(--nav-btn-active-hover);
+    border: 4px solid var(--clr-primary-300);
+    background-color: var(--clr-primary-400);
     cursor: pointer;
 
     transition: background 0.2s linear;
 }
 
 .settings__input_range::-webkit-slider-thumb:hover {
-    background-color: var(--nav-btn-active);
+    background-color: var(--clr-primary-300);
 }
 
 .settings__input_range::-webkit-slider-runnable-track {
     height: 8px;
 
     border-radius: 7px;
-    background-color: hsl(259, var(--range-saturation), 57%);
+    background-color: var(--clr-volume-range);
 
     transition: background 0.5s linear;
 }
@@ -681,31 +675,31 @@ body::after {
 }
 
 .settings__btn_apply {
-    color: var(--text-clr-primary);
+    color: var(--clr-neutral-400);
 
-    background-color: var(--nav-btn-active);
+    background-color: var(--clr-primary-300);
 }
 
 .settings__btn_apply:hover {
-    background-color: var(--nav-btn-active-hover);
+    background-color: var(--clr-primary-400);
 }
 
 .settings__btn_apply:active {
-    background-color: var(--nav-btn-active-hover-shadow);
+    background-color: var(--clr-primary-500);
 }
 
 .settings__btn_close {
-    color: hsl(0, 0%, 0%);
+    color: var(--clr-neutral-900);
 
-    background-color: var(--nav-icon);
+    background-color: var(--clr-neutral-500);
 }
 
 .settings__btn_close:hover {
-    background-color: hsl(222, 22%, 50%);
+    background-color: var(--clr-primary-200);
 }
 
 .settings__btn_close:active {
-    background-color: var(--text-clr-secondary);
+    background-color: var(--clr-neutral-600);
     
 }
 
@@ -720,13 +714,13 @@ body::after {
 
     padding: 3rem 3rem;
 
-    background-color: var(--weather-bg);
+    background-color: var(--clr-primary-700);
     border-radius: 2rem;
 }
 
 .forecast__city {
     font-size: 2.5rem;
-    color: var(--text-clr-secondary);
+    color: var(--clr-primary-200);
     font-weight: var(--fw-medium);
     text-align: center;
 }
@@ -735,7 +729,7 @@ body::after {
     margin-bottom: 2rem;
 
     font-size: 2rem;
-    color: var(--text-clr-primary);
+    color: var(--clr-neutral-400);
     font-weight: var(--fw-regular);
     text-transform: capitalize;
     text-align: center;
@@ -762,19 +756,19 @@ body::after {
 
 .forecast__day {
     font-size: 1.2rem;
-    color: var(--text-clr-secondary);
+    color: var(--clr-primary-200);
 }
 
 .forecast__weather {
     font-size: 1.3rem;
-    color: var(--text-clr-primary);
+    color: var(--clr-neutral-400);
 }
 
 .forecast__temp {
     margin-left: auto;
 
     font-size: 1.4rem;
-    color: var(--text-clr-primary);
+    color: var(--clr-neutral-400);
     font-weight: var(--fw-medium);
 }
 
@@ -808,11 +802,11 @@ body::after {
 }
 
 .forecast__circle_dashed {
-    border: 3px dashed var(--text-clr-secondary);
+    border: 3px dashed var(--clr-primary-200);
 }
 
 .forecast__circle_current {
-    background-image: linear-gradient(var(--chart-deg), transparent 50%, white 50%);
+    background-image: linear-gradient(var(--chart-deg), transparent 50%, var(--clr-neutral-400) 50%);
 }
 
 .forecast__circle_inner {
@@ -823,7 +817,7 @@ body::after {
     width: 39.7rem;
     height: 39.7rem;
 
-    background-color: var(--weather-bg);
+    background-color: var(--clr-primary-700);
 
     transform: translate3d(-50%, -50%, 0) rotate(calc(var(--chart-deg) + 90deg));
 }
@@ -841,8 +835,8 @@ body::after {
     width: 3rem;
     height: 3rem;
 
-    background-color: hsl(40, 85%, 57%);
     border-radius: 50%;
+    background-color: var(--clr-moon);
 
     animation-name: moon-rotate;
     animation-duration: 40s;
@@ -913,7 +907,7 @@ body::after {
 
 .forecast__time {
     font-size: 1.2rem;
-    color: var(--text-clr-secondary);
+    color: var(--clr-primary-200);
 }
 
 /* @keyframes ticking {
@@ -1090,7 +1084,7 @@ body::after {
 
     border: 0;
     box-shadow: 0 0 15px 3px rgb(6, 0, 59);
-    background: hsl(0, 0%, 100%);
+    background-color: var(--clr-neutral-400);
     border-radius: 1.2rem;
 
     transform: translate3d(-50%, -50%, 0);
@@ -1101,7 +1095,7 @@ body::after {
 }
 
 .modal_city {
-    background: rgb(1, 20, 88);
+    background-color: var(--clr-primary-500);
 }
 
 .modal-city__header {
@@ -1109,7 +1103,7 @@ body::after {
 
     font-size: 1.7rem;
     font-weight: var(--fw-regular);
-    color: var(--text-clr-primary);
+    color: var(--clr-neutral-400);
 }
 
 .modal-city__form {
@@ -1134,7 +1128,7 @@ body::after {
 
 .modal-city__input:focus,
 .modal-city__input:focus + .modal-city__btn {
-    border-color: var(--nav-btn-active);
+    border-color: var(--clr-primary-300);
 }
 
 .modal-city__btn {
@@ -1146,7 +1140,7 @@ body::after {
     border-left: 0;
     border-top-right-radius: 1.5rem;
     border-bottom-right-radius: 1.5rem;
-    background: #fff;
+    background-color: var(--clr-neutral-400);
     cursor: pointer;
 
     transition: 
@@ -1156,8 +1150,8 @@ body::after {
 }
 
 .modal-city__btn:hover {
-    background: var(--nav-btn-active);
-    color: #fff;
+    background-color: var(--clr-primary-300);
+    color: var(--clr-neutral-400);
 }
 
 .message {
@@ -1179,11 +1173,11 @@ body::after {
 }
 
 .message__success {
-    background-color: var(--message-clr-success);
+    background-color: var(--clr-positive);
 }
 
 .message__alert {
-    background-color: var(--message-clr-alert);
+    background-color: var(--clr-negative);
 }
 
 .message__img {
@@ -1197,7 +1191,7 @@ body::after {
     height: 3rem;
 
     border-radius: 50%;
-    background-color: hsl(0, 0%, 85%);
+    background-color: var(--clr-neutral-400);
 }
 
 .message__icon {
@@ -1206,11 +1200,11 @@ body::after {
 }
 
 .message__icon_success {
-    fill: var(--message-clr-success);
+    fill: var(--clr-positive);
 }
 
 .message__icon_alert {
-    fill: var(--message-clr-alert);
+    fill: var(--clr-negative);
 }
 
 .message__text {
@@ -1219,7 +1213,7 @@ body::after {
     z-index: 10;
 
     font-size: 1.5rem;
-    color: #fff;
+    color: var(--clr-neutral-400);
     font-weight: var(--fw-medium);
 
     opacity: 0;
