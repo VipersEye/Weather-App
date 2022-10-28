@@ -1,13 +1,14 @@
 export default class App {
     static #instance = null;
 
-    constructor(AppDate, AppWeather) {
+    constructor(AppDate, AppWeather, AppAnimations) {
         // singleton
 
         if (App.#instance) return App.#instance;
         App.#instance = this;
         this.date = new AppDate();
         this.weather = new AppWeather();
+        this.animations = new AppAnimations();
 
         // listeners
 

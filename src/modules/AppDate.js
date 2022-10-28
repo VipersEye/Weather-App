@@ -1,6 +1,6 @@
 export default class AppDate {
     constructor() {
-        this.turnOnClock();
+        this.updateTimeAndDate();
         this.updateAsideDays();
     }
 
@@ -42,17 +42,11 @@ export default class AppDate {
         return date;
     }
 
-    async turnOnClock() {
+    async updateTimeAndDate() {
         let currentMs = (new Date()).getMilliseconds();
         await new Promise( (resolve) => setTimeout(() => {
             resolve();
         }, 1000 - currentMs) );
-        let timeDelimiter = document.querySelector('#delimiter');
-        timeDelimiter.style.animationName = 'ticking';
-        this.updateTimeAndDate();
-    }
-
-    updateTimeAndDate() {
         for (let key in this.currentDate) {
             document.querySelector(`#${key}`).textContent = this.currentDate[key];
         }
