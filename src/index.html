@@ -14,7 +14,7 @@
     <!-- svg sprite -->
 
     <svg style="display: none;">
-        <symbol id="home" viewBox="70 34.76 559.6 486.38">
+        <symbol id="homeIcon" viewBox="70 34.76 559.6 486.38">
             <g>
                 <path d="m629.29 255.54c-1.3945-11.617-7.2344-22-16.438-29.23l-228.68-179.63c-20.238-15.898-48.512-15.898-68.758 0l-228.68 179.63c-19 14.926-22.316 42.523-7.3945 61.523 14.926 19 42.523 22.316 61.527 7.3906l188.72-148.25c11.895-9.3438 28.512-9.3438 40.406 0l188.72 148.25c8.0078 6.293 17.547 9.3438 27.02 9.3438 12.996 0 25.871-5.7422 34.504-16.734 7.2305-9.2031 10.441-20.672 9.0469-32.293" fill-rule="evenodd"/>
                 <path d="m542.81 309.61-171.67-133.87c-12.574-9.8047-30.133-9.8047-42.711 0l-171.66 133.87c-2.7891 2.1758-4.4219 5.5117-4.4219 9.0508v152.77c0 27.406 22.297 49.703 49.707 49.703h295.47c27.406 0 49.703-22.297 49.703-49.703v-152.77c0-3.5391-1.6328-6.875-4.418-9.0508" fill-rule="evenodd"/>
@@ -75,7 +75,7 @@
                     <li class="nav__item">
                         <button type="button" class="nav__btn nav__btn_active" id="home">
                             <svg class="nav__icon nav__icon_home">
-                                <use xlink:href="#home"></use>
+                                <use xlink:href="#homeIcon"></use>
                             </svg>
                         </button>
                     </li>
@@ -284,16 +284,16 @@
                             <div class="settings__item">
                                 <label class="settings__label">Temperature metric</label>
                                 <div class="settings__radio-container">
-                                    <input class="settings__input settings__input_radio" type="radio" name="temp-metric" id="input-metric-kelvin" value="kelvin" checked>
-                                    <input class="settings__input settings__input_radio" type="radio" name="temp-metric" id="input-metric-celsius" value="celsius">
+                                    <input class="settings__input settings__input_radio" type="radio" name="temp-metric" id="input-metric-kelvin" value="standard">
+                                    <input class="settings__input settings__input_radio" type="radio" name="temp-metric" id="input-metric-celsius" value="metric" checked>
                                 </div>
                             </div>
 
                             <div class="settings__item">
                                 <label class="settings__label">Animations</label>
                                 <div class="settings__radio-container">
-                                    <input class="settings__input settings__input_radio" type="radio" name="animations" id="input-animations-on" value="on" checked>
-                                    <input class="settings__input settings__input_radio" type="radio" name="animations" id="input-animations-off" value="off">
+                                    <input class="settings__input settings__input_radio" type="radio" name="animations" id="input-animations-on" value="on">
+                                    <input class="settings__input settings__input_radio" type="radio" name="animations" id="input-animations-off" value="off" checked>
                                 </div>
                             </div>
 

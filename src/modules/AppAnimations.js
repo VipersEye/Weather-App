@@ -1,6 +1,14 @@
 export default class AppAnimations {
     constructor() {
-        this.turnOnAnimations();
+        this.setAnimations();
+    }
+
+    setAnimations() {
+        if (JSON.parse(localStorage.getItem('settings')).animations) {
+            this.turnOnAnimations();
+        } else {
+            this.turnOffAnimations();
+        }
     }
 
     async turnOnAnimations() {

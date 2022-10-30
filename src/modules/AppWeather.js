@@ -1,6 +1,7 @@
 export default class AppWeather {
 
     constructor() {
+        this.settings = settings;
         this.position = null;
         this.city = null;
         this.weatherData = null;
@@ -22,8 +23,8 @@ export default class AppWeather {
             );
         } ).then( () => {
             this.startApp();
-        } ).catch( (error) => {
-            console.log(`unknown error ${error.code}: ${error.message}`);
+        } ).catch( async (error) => {
+            await this.showAlert('alert', `unknown error ${error.code}: ${error.message}`);
         } );
     }
 
@@ -79,30 +80,28 @@ export default class AppWeather {
 
     async startApp() {
         console.log('start app');
-        await this.setWeather();
-        this.updateWeather();
+        await this.updateWeather();
         this.setInitialStateChart();
 
         const weatherDataUpdater = () => {
-            setTimeout( async () => {
-                await this.setWeather();
+            setTimeout( async () =>  {
+                await this.updateWeather();
+                weatherDataUpdater();
             }, 3600 * 1000);
         };
 
         weatherDataUpdater();
     }
 
-    updateWeather() {
+    async updateWeather() {
         console.log('update weather');
+        await this.setWeather();
         this.updateCurrentWeather();
         this.updateForecastWeather();
-        
-        setTimeout(() => {
-            this.updateWeather();
-        }, 3 * 3600 * 1000);
     }
 
     async updateForecastWeather() {
+        console.log('updateForecast');
         document.querySelector('#current-city').textContent = this.weatherData.city;
         document.querySelector('#current-weather').textContent = this.weatherData.current.weather;
 
@@ -122,6 +121,7 @@ export default class AppWeather {
     }
 
     updateCurrentWeather() {
+        console.log('updateCurrent');
         for (let param in this.weatherData.difference) {
             for (let paramType in this.weatherData.difference[param]) {
                 let weatherParameterCurrent = document.querySelector(`#current-${param}-${paramType}`);
@@ -210,7 +210,7 @@ export default class AppWeather {
                 url.searchParams.set('q', this.city);
             }
             url.searchParams.set('appid', '242332545f3bef63dbb3fb922ae08531');
-            url.searchParams.set('units', 'metric');
+            url.searchParams.set('units', `${JSON.parse(localStorage.getItem('settings')).units}`);
             return url;
         };
 
@@ -226,8 +226,8 @@ export default class AppWeather {
                 let responseForecast = await fetch(urlForecast);
                 let forecast = await responseForecast.json();
     
-                console.log(weather);
-                console.log(forecast);
+                // console.log(weather);
+                // console.log(forecast);
     
                 return {weather, forecast};
     
@@ -341,14 +341,15 @@ export default class AppWeather {
                 Snow: 'Snow'
             };
     
+            let temperatureUnits = JSON.parse(localStorage.getItem('settings')).units === 'metric' ? '°' : 'K';
             let weatherData = {
                 city: currentWeatherData.name,
                 date: new Date(),
                 units: {
                     temperature: {
-                        temp: '°',
-                        temp_min: '°',
-                        temp_max: '°'
+                        temp:  temperatureUnits,
+                        temp_min: temperatureUnits,
+                        temp_max: temperatureUnits
                     },
                     pressure: {
                         pressure: ' hpa',

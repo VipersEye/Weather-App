@@ -587,25 +587,25 @@ body::after {
     background-color: var(--clr-primary-300);
 }
 
-.settings__input_radio[value="kelvin"]::after,
+.settings__input_radio[value="standard"]::after,
 .settings__input_radio[value="on"]::after {
     border-top-left-radius: 0.7rem;
     border-bottom-left-radius: 0.7rem;
     border-right-width: 0;
 }
 
-.settings__input_radio[value="celsius"]::after,
+.settings__input_radio[value="metric"]::after,
 .settings__input_radio[value="off"]::after {
     border-top-right-radius: 0.7rem;
     border-bottom-right-radius: 0.7rem;
     border-left-width: 0;
 }
 
-.settings__input_radio[value="kelvin"]::after {
+.settings__input_radio[value="standard"]::after {
     content: "kelvin";
 }
 
-.settings__input_radio[value="celsius"]::after {
+.settings__input_radio[value="metric"]::after {
     content: "celsius";
 }
 

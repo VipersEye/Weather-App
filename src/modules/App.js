@@ -5,7 +5,14 @@ export default class App {
         // singleton
 
         if (App.#instance) return App.#instance;
-        App.#instance = this;
+        App.#instance = this; 
+
+        // settings
+
+        this.setInitialSettings();
+
+        // subclasses
+
         this.date = new AppDate();
         this.weather = new AppWeather();
         this.animations = new AppAnimations();
@@ -137,6 +144,83 @@ export default class App {
         let volumeRange = document.querySelector('.settings__input[name="volume"]');
         volumeRange.addEventListener('input', changeVolume);
 
+        let applySettingsBtn = document.querySelector('.settings__btn_apply');
+        applySettingsBtn.addEventListener('click', this.applySettings.bind(this));
+
+        let closeSettingsBtn = document.querySelector('.settings__btn_close');
+        closeSettingsBtn.addEventListener('click', this.closeSettings);
+
+    }
+
+    setInitialSettings() {
+        if (localStorage.length === 0) {
+            let username = prompt('Enter your name');
+            let defaultSettings = {
+                username,
+                units: 'metric',
+                animations: false,
+                volume: 5
+            };
+            localStorage.setItem('settings', JSON.stringify(defaultSettings));
+        }
+
+        let settings = JSON.parse( localStorage.getItem('settings') );
+        document.querySelector('#username').textContent = settings.username;
+        document.querySelector('#input-username').value = settings.username;
+        document.querySelector(`.settings__input_radio[value="${settings.units}"]`).checked = true;
+        document.querySelector(`.settings__input_radio[value="${settings.animations ? 'on' : 'off'}"]`).checked = true;
+        document.querySelector('#input-volume').value = settings.volume;
+
+    }
+
+    checkUsernameValidity(usernameInput) {
+        let errorMessage = '';
+        let username = usernameInput.value;
+        switch (true) {
+            case (/^[a-z]+| [a-z]+/.test(username)):
+                errorMessage = 'Name must begin with uppercase letter';
+                break;
+            case (/[^A-Za-z ]/.test(username)):
+                errorMessage = 'Name should contain only latin letters';
+                break;
+            case (username.length < 1 || username.length > 20):
+                errorMessage = 'Name min length is 1 and max length is 20 symbols';
+        }
+        usernameInput.setCustomValidity(errorMessage);
+        return usernameInput.reportValidity();
+    }    
+
+    async applySettings() {
+        const storeSettings = () => {
+            let username = document.querySelector('#input-username').value;
+            let units = document.querySelector('.settings__input_radio[name="temp-metric"]:checked').value;
+            let animations = document.querySelector('.settings__input_radio[name="animations"]:checked').value === 'on';
+            let volume = (+document.querySelector('#input-volume').value).toFixed(0);
+            
+            let settings = {
+                username,
+                units,
+                animations,
+                volume
+            };
+            localStorage.setItem('settings', JSON.stringify(settings));
+        };
+
+        let usernameInput = document.querySelector('#input-username');
+        if (!this.checkUsernameValidity(usernameInput)) return;
+
+        storeSettings();
+
+        let usernameElem = document.querySelector('#username');
+        usernameElem.textContent = JSON.parse( localStorage.getItem('settings') ).username;
+        await this.weather.updateWeather();
+        this.animations.setAnimations();
+
+        await this.weather.showAlert('success', 'Settings have been successfully applied');
+    }
+
+    closeSettings() {
+        document.querySelector('#home').dispatchEvent(new Event('click'));
     }
 
 }
