@@ -64,17 +64,42 @@ export default class AppWeather {
     }
 
     async requestCity() {
-        let modalCity = document.querySelector('.modal_city');
-        let modalCityInput = document.querySelector('.modal-city__input');
-        let modalCityBtn = document.querySelector('.modal-city__btn');
+        let modalCity = document.querySelector('.modal');
+        let modalCityHeader = modalCity.querySelector('.modal__header');
+        let modalCityInput = modalCity.querySelector('.modal__input');
+        let modalCityBtn = modalCity.querySelector('.modal__btn');
+        modalCityHeader.textContent = 'Enter the name of your city';
+        modalCityInput.value = '';
         modalCity.showModal();
-
+        console.log('show');
         await new Promise( (resolve) => {
-            modalCityBtn.addEventListener('click', () => resolve());
+            const checkCityNameValidity = () => {
+                console.log('modal click city');
+                let errorMessage = '';
+                let cityName = modalCityInput.value;
+                switch (true) {
+                    case (/[0-9]/.test(cityName)):
+                        errorMessage = 'City name should contain only latin letters';
+                        break;
+                    case (cityName.length < 1 || cityName.length > 20):
+                        errorMessage = 'Length of city name should be between 1 and 20 symbols';
+                        break;
+                    default: 
+                        errorMessage = '';
+                        break;
+                }
+                modalCityInput.setCustomValidity(errorMessage);
+                if (modalCityInput.reportValidity()) {
+                    modalCityBtn.removeEventListener('click', checkCityNameValidity);
+                    resolve();
+                }; 
+            };
+
+            modalCityBtn.addEventListener('click', checkCityNameValidity);
+            console.log('eventL');
         } );
 
         let cityName = modalCityInput.value;
-        modalCityInput.value = '';
         this.city = cityName;
     }
 

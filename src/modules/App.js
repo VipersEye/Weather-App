@@ -9,13 +9,12 @@ export default class App {
 
         // settings
 
-        this.setInitialSettings();
-
-        // subclasses
-
-        this.date = new AppDate();
-        this.weather = new AppWeather();
-        this.animations = new AppAnimations();
+        (async () => {
+            await this.setInitialSettings();
+            this.date = new AppDate();
+            this.weather = new AppWeather();
+            this.animations = new AppAnimations();
+        })();
 
         // listeners
 
@@ -152,9 +151,34 @@ export default class App {
 
     }
 
-    setInitialSettings() {
+    async setInitialSettings() {
+        const showModalUsername = async () => {
+            let modalUsername = document.querySelector('.modal');
+            let modalUsernameHeader = modalUsername.querySelector('.modal__header');
+            let modalUsernameInput = modalUsername.querySelector('.modal__input');
+            let modalUsernameBtn = modalUsername.querySelector('.modal__btn');
+            modalUsernameHeader.textContent = 'Enter your name';
+            modalUsernameInput.value = '';
+            modalUsername.showModal();
+            console.log('show modal');
+            await new Promise( (resolve) => {
+                const modalEventListener = () => {
+                    console.log('modal click username');
+                    
+                    if (this.checkUsernameValidity(modalUsernameInput)) {
+                        modalUsernameBtn.removeEventListener('click', modalEventListener);
+                        resolve();
+                    }; 
+                };
+
+                modalUsernameBtn.addEventListener('click', modalEventListener);
+                console.log('eventL');
+            } );
+            return modalUsernameInput.value;
+        };
+
         if (localStorage.length === 0) {
-            let username = prompt('Enter your name');
+            let username = await showModalUsername();
             let defaultSettings = {
                 username,
                 units: 'metric',

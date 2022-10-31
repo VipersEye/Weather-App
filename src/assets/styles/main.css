@@ -1092,7 +1092,7 @@ body::after {
 
     border: 0;
     box-shadow: 0 0 15px 3px rgb(6, 0, 59);
-    background-color: var(--clr-neutral-400);
+    background-color: var(--clr-primary-500);
     border-radius: 1.2rem;
 
     transform: translate3d(-50%, -50%, 0);
@@ -1102,11 +1102,8 @@ body::after {
     backdrop-filter: blur(4px);
 }
 
-.modal_city {
-    background-color: var(--clr-primary-500);
-}
-
-.modal-city__header {
+.modal__header {
+    display: block;
     margin-bottom: 1rem;
 
     font-size: 1.7rem;
@@ -1114,11 +1111,11 @@ body::after {
     color: var(--clr-neutral-400);
 }
 
-.modal-city__form {
+.modal__form {
     display: flex;
 }
 
-.modal-city__input {
+.modal__input {
     flex: 1;
 
     padding: 0.5rem 1rem;
@@ -1134,12 +1131,12 @@ body::after {
     transition: border .19s linear;
 }
 
-.modal-city__input:focus,
-.modal-city__input:focus + .modal-city__btn {
+.modal__input:focus,
+.modal__input:focus + .modal__btn {
     border-color: var(--clr-primary-300);
 }
 
-.modal-city__btn {
+.modal__btn {
     padding: 0.5rem 1rem;
 
     font-size: 1.3rem;
@@ -1157,7 +1154,7 @@ body::after {
         border 0.19s linear;
 }
 
-.modal-city__btn:hover {
+.modal__btn:hover {
     background-color: var(--clr-primary-300);
     color: var(--clr-neutral-400);
 }
