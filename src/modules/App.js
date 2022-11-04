@@ -1,7 +1,7 @@
 export default class App {
     static #instance = null;
 
-    constructor(AppDate, AppWeather, AppAnimations) {
+    constructor(AppDate, AppWeather, AppAnimations, AppPlayer) {
         // singleton
 
         if (App.#instance) return App.#instance;
@@ -14,6 +14,7 @@ export default class App {
             this.date = new AppDate();
             this.weather = new AppWeather();
             this.animations = new AppAnimations();
+            this.player = new AppPlayer();
         })();
 
         // listeners
@@ -113,13 +114,7 @@ export default class App {
             document.querySelector('#first-toggler').classList.add('toggler_on');
         };
 
-        const changeVolume = (e) => {
-            let currentVolume = e.target.value;
-            let rangeColorSaturation = `${currentVolume * 10}%`;
-            document.documentElement.style.setProperty('--range-saturation', rangeColorSaturation);
-        };
-
-        
+   
         let weatherParamSliders = document.querySelectorAll('.weather__home-item');
         weatherParamSliders.forEach( (weatherParamSlider) => {
             weatherParamSlider.addEventListener('mousemove', addHighlighting);
@@ -133,22 +128,16 @@ export default class App {
         blockTogglerOn.addEventListener('animationend', toggleContent);
         blockTogglerOff.addEventListener('animationend', toggleContentEnd);
 
-
         let navBtns = document.querySelectorAll('.nav__btn');
         navBtns.forEach((btn) => {
             btn.addEventListener('click', toggleContentStart);
         });
-
-
-        let volumeRange = document.querySelector('.settings__input[name="volume"]');
-        volumeRange.addEventListener('input', changeVolume);
 
         let applySettingsBtn = document.querySelector('.settings__btn_apply');
         applySettingsBtn.addEventListener('click', this.applySettings.bind(this));
 
         let closeSettingsBtn = document.querySelector('.settings__btn_close');
         closeSettingsBtn.addEventListener('click', this.closeSettings);
-
     }
 
     async setInitialSettings() {
@@ -183,7 +172,7 @@ export default class App {
                 username,
                 units: 'metric',
                 animations: false,
-                volume: 5
+                volume: 0.5
             };
             localStorage.setItem('settings', JSON.stringify(defaultSettings));
         }
@@ -194,7 +183,8 @@ export default class App {
         document.querySelector(`.settings__input_radio[value="${settings.units}"]`).checked = true;
         document.querySelector(`.settings__input_radio[value="${settings.animations ? 'on' : 'off'}"]`).checked = true;
         document.querySelector('#input-volume').value = settings.volume;
-
+        document.documentElement.style.setProperty('--range-saturation', `${settings.volume * 100}%`);
+        document.querySelector('#btn-volume use').setAttribute('xlink:href',`#volume-icon-${settings.volume > 0.66 ? 'high' : settings.volume < 0.67 && settings.volume > 0.33 ? 'medium' : settings.volume < 0.34 && settings.volume > 0 ? 'low' : 'mute'}`);
     }
 
     checkUsernameValidity(usernameInput) {
@@ -219,7 +209,7 @@ export default class App {
             let username = document.querySelector('#input-username').value;
             let units = document.querySelector('.settings__input_radio[name="temp-metric"]:checked').value;
             let animations = document.querySelector('.settings__input_radio[name="animations"]:checked').value === 'on';
-            let volume = (+document.querySelector('#input-volume').value).toFixed(0);
+            let volume = +document.querySelector('#input-volume').value;
             
             let settings = {
                 username,

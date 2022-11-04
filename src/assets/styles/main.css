@@ -531,14 +531,11 @@ body::after {
     font-weight: var(--fw-medium);
 }
 
-.settings__input:not(input[type="radio"]) {
-    width: 35%;
-}
-
 /* input text =============================== */
 
 .settings__input_text {
     padding: 0.25rem 0.5rem;
+    width: 35%;
     
     font-size: 1.2rem;
     line-height: 1;
@@ -617,15 +614,97 @@ body::after {
     content: "off";
 }
 
-/* input range ============================== */
+/* player ============================== */
 
-.settings__input_range {
+.settings__player {
+    margin: 2rem -4.5rem -2rem;
+}
+
+.player__progress {
     appearance: none;
+
+    position: relative;
+    width: 100%;
+    height: 1rem;
+
+    cursor: pointer;
+}
+
+.player__progress::-webkit-progress-bar {
+    border-radius: 0.4rem;
+    background-color: var(--clr-primary-200);
+
+    overflow: hidden;
+}
+
+.player__progress::-webkit-progress-value {
+    background-color: var(--clr-primary-300);
+}
+
+.player__panel {
+    padding: 1rem 3rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.player__panel-item {
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+}
+
+.player__btn {
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.player__icon {
+    width: 2rem;
+    height: 2rem;
+
+    fill: var(--clr-primary-200);
+
+    transition: fill 0.3s linear;
+}
+
+.player__icon_volume {
+    fill: var(--clr-volume-range);
+}
+
+.player__btn:hover .player__icon {
+    fill: var(--clr-primary-300);
+}
+
+.player__btn:active .player__icon {
+    fill: var(--clr-primary-400);
+}
+
+.player__btn_on .player__icon {
+    fill: var(--clr-primary-300);
+}
+
+.player__btn_off .player__icon {
+    fill: var(--clr-primary-200);
+}
+
+.player__volume {
+    appearance: none;
+
+    width: 8rem;
     
     background-color: transparent;
 }
 
-.settings__input_range::-webkit-slider-thumb {
+.player__volume::-webkit-slider-thumb {
     appearance: none;
     
     margin-top: -9px;
@@ -640,11 +719,11 @@ body::after {
     transition: background 0.2s linear;
 }
 
-.settings__input_range::-webkit-slider-thumb:hover {
+.player__volume::-webkit-slider-thumb:hover {
     background-color: var(--clr-primary-300);
 }
 
-.settings__input_range::-webkit-slider-runnable-track {
+.player__volume::-webkit-slider-runnable-track {
     height: 8px;
 
     border-radius: 7px;
@@ -653,7 +732,7 @@ body::after {
     transition: background 0.5s linear;
 }
 
-.settings__input_range:focus {
+.player__volume:focus {
     outline: none;
 }
 
