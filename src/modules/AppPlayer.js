@@ -1,20 +1,27 @@
 export default class AppPlayer {
     constructor() {
-        let trackNames = [
+        this.trackNames = [
             'Lofi Fruits Music Chill Fruits Music - Take Me To Church',
-            'HYGH Lofi Music Lobit Cooky - Redbone',
             'LoFi Waiter - Cosy Rain',
+            'HYGH Lofi Music Lobit Cooky - Redbone',
             'Kisiaria - Urban Sunsets',
             'Altair Blake - No Sleep',
-
         ];
 
-        this.tracks = trackNames.map((songName) => new Audio(`./music/${songName}.mp3`));
+        this.tracks = this.trackNames.map((songName) => new Audio(`./music/${songName}.mp3`));
+
+        (async () => {
+            await Promise.all(this.tracks.map((audio) => new Promise((resolve) => {
+                audio.addEventListener('loadeddata', () => resolve());
+            })));
+            this.setTrackInfo();
+        })();
+
         this.currentTrackId = 0;
         this.progress = 0;
         this.repeat = false;
         this.volume = +JSON.parse(localStorage.getItem('settings')).volume;
-        
+
         const changeVolume = (newVolume) => {
             this.volume = newVolume;
             this.currentTrack.volume = this.volume;
@@ -58,9 +65,24 @@ export default class AppPlayer {
             let width = e.target.offsetWidth;
             let mousePos = e.clientX - e.target.getBoundingClientRect().left;
             let percent = +(mousePos / width).toFixed(2);
-            this.currentTrack.currentTime = this.currentTrack.duration * percent;
+            this.currentTrack.currentTime = +(this.currentTrack.duration * percent).toFixed(0);
             this.progress = percent * 100;
             e.target.value = this.progress;
+        };
+
+        const showHoverTrackTime = (e) => {
+            let width = e.target.offsetWidth;
+            let mousePos = e.clientX - e.target.getBoundingClientRect().left;
+            let percent = +(mousePos / width).toFixed(2);
+            let hoverTime = +(this.currentTrack.duration * percent).toFixed(0);
+
+            let hoverTimeElem = document.querySelector('.player__hover-time');
+            hoverTimeElem.textContent = this.secsToFormat(hoverTime);
+            let hoverPos;
+            if ( mousePos - ((hoverTimeElem.offsetWidth) / 2).toFixed(0) < 0 ) hoverPos = 0;
+            else if ( mousePos + hoverTimeElem.offsetWidth / 2 > width ) hoverPos = Math.floor( width - hoverTimeElem.offsetWidth ) ;
+            else hoverPos = mousePos - ((hoverTimeElem.offsetWidth) / 2).toFixed(0);
+            document.documentElement.style.setProperty('--new-track-time-pos', `${hoverPos}px`);
         };
 
         let volumeRange = document.querySelector('#input-volume');
@@ -90,6 +112,7 @@ export default class AppPlayer {
 
         let progress = document.querySelector('.player__progress');
         progress.addEventListener('click', playWithPosition);
+        progress.addEventListener('mousemove', showHoverTrackTime);
     }
 
     get currentTrack() {
@@ -114,6 +137,7 @@ export default class AppPlayer {
 
     play() {
         this.currentTrack.volume = this.volume;
+        this.setTrackInfo();
         this.currentTrack.play();
 
         document.querySelector('#btn-play use').setAttribute('xlink:href', '#pause-icon');
@@ -124,6 +148,11 @@ export default class AppPlayer {
         this.updater = setInterval( () => {
             this.progress += 0.1;
             progressBar.value = this.progress;
+
+            let currentTimeElem = document.querySelector('.player__track-time_current');
+            let currentTime = Math.floor(this.currentTrack.duration * this.progress / 100);
+            currentTimeElem.textContent = this.secsToFormat( currentTime );
+
         }, step);
     }
 
@@ -133,4 +162,23 @@ export default class AppPlayer {
         document.querySelector('#btn-play use').setAttribute('xlink:href', '#play-icon');
         clearInterval(this.updater);
     }
+
+    setTrackInfo() {
+        let trackCurrentTime = document.querySelector('.player__track-time_current');
+        let trackDurationTime = document.querySelector('.player__track-time_duration');
+        let trackNameElem = document.querySelector('.player__track-name');
+        let trackArtistElem = document.querySelector('.player__track-artist');
+
+        let [,trackName] = this.trackNames[this.currentTrackId].split(' - ');
+        let [trackArtist] = this.trackNames[this.currentTrackId].split(' - '); 
+
+        trackCurrentTime.textContent = '0:00';
+        trackDurationTime.textContent = `${this.secsToFormat(Math.floor(this.currentTrack.duration))}`;
+        trackNameElem.textContent = trackName;
+        trackArtistElem.textContent = trackArtist;
+    }
+
+    secsToFormat(secs) {
+        return `${Math.floor(secs / 60)}:${'0'.repeat(2 - String(secs % 60).length)}${secs % 60}`;
+    };
 }
