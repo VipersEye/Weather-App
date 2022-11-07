@@ -5,11 +5,13 @@ import AppDate from 'modules/AppDate';
 import AppWeather from 'modules/AppWeather';
 import AppAnimations from 'modules/AppAnimations';
 import AppPlayer from 'modules/AppPlayer';
+import AppSlider from 'modules/AppSlider';
 
 const app = new App
     (
         AppDate, 
         AppWeather, 
         AppAnimations, 
-        AppPlayer
+        AppPlayer,
+        AppSlider
     );

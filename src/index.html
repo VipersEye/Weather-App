@@ -139,7 +139,7 @@
                     </li>
 
                     <li class="nav__item">
-                        <button type="button" class="nav__btn" disabled>
+                        <button type="button" class="nav__btn nav__btn_disabled" disabled>
                             <svg class="nav__icon nav__icon_book">
                                 <use xlink:href="#book-icon"></use>
                             </svg>
@@ -147,7 +147,7 @@
                     </li>
 
                     <li class="nav__item">
-                        <button type="button" class="nav__btn" id="">
+                        <button type="button" class="nav__btn" id="images">
                             <svg class="nav__icon nav__icon_image">
                                 <use xlink:href="#image-icon"></use>
                             </svg>
@@ -155,7 +155,7 @@
                     </li>
 
                     <li class="nav__item">
-                        <button type="button" class="nav__btn" disabled>
+                        <button type="button" class="nav__btn nav__btn_disabled" disabled>
                             <svg class="nav__icon nav__icon_notify">
                                 <use xlink:href="#notify-icon"></use>
                             </svg>
@@ -163,7 +163,7 @@
                     </li>
 
                     <li class="nav__item">
-                        <button type="button" class="nav__btn" disabled>
+                        <button type="button" class="nav__btn nav__btn_disabled" disabled>
                             <svg class="nav__icon nav__icon_upload">
                                 <use xlink:href="#upload-icon"></use>
                             </svg>
@@ -203,11 +203,14 @@
                     <div class="toggler" id="first-toggler"></div>
                     <div class="toggler" id="second-toggler"></div>
 
-                    <section class="weather">
+                    <div class="weather">
 
-                        <img class="weather__img" src="./images/backgrounds/night.jpg" alt="day time">
+                        <section class="weather__images">
+                            <div class="weather__images-slider"></div>
+                            <div class="weather__images-control"></div>
+                        </section>
     
-                        <div class="weather__home content_hidden">
+                        <section class="weather__home content_show">
     
                             <div class="weather__home-item">
                                 <div class="weather__param-slider" current="0">
@@ -330,9 +333,9 @@
                                 </div>
                             </div>
                             
-                        </div>
+                        </section>
 
-                        <div class="weather__settings content_show">
+                        <section class="weather__settings content_hidden">
 
                             <div class="settings__item">
                                 <label class="settings__label" for="input-username">Your name</label>
@@ -407,9 +410,9 @@
                                 </div>
                             </div>
 
-                        </div>
+                        </section>
     
-                    </section>
+                    </div>
 
                 </main>
 

@@ -1,7 +1,13 @@
 export default class App {
     static #instance = null;
 
-    constructor(AppDate, AppWeather, AppAnimations, AppPlayer) {
+    constructor(
+        AppDate, 
+        AppWeather, 
+        AppAnimations, 
+        AppPlayer, 
+        AppSlider
+    ) {
         // singleton
 
         if (App.#instance) return App.#instance;
@@ -15,6 +21,7 @@ export default class App {
             this.weather = new AppWeather();
             this.animations = new AppAnimations();
             this.player = new AppPlayer();
+            this.slider = new AppSlider();
         })();
 
         // listeners
@@ -83,11 +90,11 @@ export default class App {
             let currentActiveContent = document.querySelector('.content_show');
             let nextShowContent = document.querySelector(`.weather__${navBtnActiveId}`);
 
-            currentActiveContent?.classList.toggle('content_show');
-            currentActiveContent?.classList.toggle('content_hidden');
+            currentActiveContent.classList.remove('content_show');
+            currentActiveContent.classList.add('content_hidden');
 
-            nextShowContent?.classList.toggle('content_show');
-            nextShowContent?.classList.toggle('content_hidden');
+            nextShowContent.classList.add('content_show');
+            nextShowContent.classList.remove('content_hidden');
 
             blockTogglerOff.classList.add('toggler_off');
         };
