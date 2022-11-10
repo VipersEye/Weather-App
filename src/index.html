@@ -357,6 +357,11 @@
                                     <input class="settings__input settings__input_radio" type="radio" name="animations" id="input-animations-off" value="off" checked>
                                 </div>
                             </div>
+
+                            <div class="settings__item">
+                                <label class="settings__label" for="input-theme">App Theme</label>
+                                <input class="settings__input settings__input_range" type="range" name="theme" id="input-theme" value="252" min="0" max="360" step="1">
+                            </div>
                             
                             <div class="settings__btns">
                                 <button class="settings__btn settings__btn_apply" type="button">Apply</button>
@@ -400,7 +405,7 @@
                                                 <use xlink:href="#volume-icon-medium"></use>
                                             </svg>
                                         </button>
-                                        <input class="player__volume" type="range" name="volume" id="input-volume" value="0.5" min="0" max="1" step="0.01">
+                                        <input class="settings__input_range player__volume" type="range" name="volume" id="input-volume" value="0.5" min="0" max="1" step="0.01">
                                         <button type="button" class="player__btn player__btn_off" id="btn-repeat">
                                             <svg class="player__icon">
                                                 <use xlink:href="#repeat-icon"></use>

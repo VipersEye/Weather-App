@@ -14,16 +14,15 @@
     --toggler-radius: 1100px;
     --range-saturation: 50%;
     --new-track-time-pos: 5rem;
-}
+    --main-clr: 252;
 
-:root.night {
-    --clr-primary-800: hsl(227, 96%, 11%);
-    --clr-primary-700: hsl(228, 85%, 13.3%);
-    --clr-primary-600: hsl(226, 61%, 16%);
-    --clr-primary-500: hsl(248, 66%, 25%);
-    --clr-primary-400: hsl(259, 78%, 33%);
-    --clr-primary-300: hsl(259, 96%, 57%);
-    --clr-primary-200: hsl(230, 29%, 53%);
+    --clr-primary-800: hsl(var(--main-clr), 96%, 11%);
+    --clr-primary-700: hsl(var(--main-clr), 85%, 13.3%);
+    --clr-primary-600: hsl(var(--main-clr), 61%, 16%);
+    --clr-primary-500: hsl(var(--main-clr), 66%, 25%);
+    --clr-primary-400: hsl(var(--main-clr), 78%, 33%);
+    --clr-primary-300: hsl(var(--main-clr), 96%, 57%);
+    --clr-primary-200: hsl(var(--main-clr), 29%, 53%);
 
     --clr-neutral-900: hsl(0, 0%, 0%);
     --clr-neutral-600: hsl(0, 0%, 50%);
@@ -33,9 +32,9 @@
     --clr-positive: hsl(124, 100%, 30%);
     --clr-negative: hsl(0, 98%, 35%);
 
-    --clr-volume-range: hsl(259, var(--range-saturation), 57%);
-    --clr-decorate-c1: hsl(254, 50%, 28%, 0.2);
-    --clr-decorate-c2: hsl(237, 47%, 23%, 0.21);
+    --clr-volume-range: hsl(var(--main-clr), var(--range-saturation), 57%);
+    --clr-decorate-c1: hsl(var(--main-clr), 50%, 28%, 0.2);
+    --clr-decorate-c2: hsl(var(--main-clr), 47%, 23%, 0.21);
     --clr-moon: hsl(40, 85%, 57%);
 }
 
@@ -607,6 +606,10 @@ body::after {
     font-weight: var(--fw-medium);
 }
 
+.settings__input:not([type="radio"]) {
+    width: 35%;
+}
+
 /* input text =============================== */
 
 .settings__input_text {
@@ -688,6 +691,44 @@ body::after {
 
 .settings__input_radio[value="off"]::after {
     content: "off";
+}
+
+/* input range =============================== */
+
+.settings__input_range {
+    appearance: none;
+
+    width: 8rem;
+    
+    background-color: transparent;
+}
+
+.settings__input_range::-webkit-slider-thumb {
+    appearance: none;
+    
+    margin-top: -9px;
+    width: 25px;
+    height: 25px;
+
+    border-radius: 50%;
+    border: 4px solid var(--clr-primary-300);
+    background-color: var(--clr-primary-400);
+    cursor: pointer;
+
+    transition: background 0.2s linear;
+}
+
+.settings__input_range::-webkit-slider-thumb:hover {
+    background-color: var(--clr-primary-300);
+}
+
+.settings__input_range::-webkit-slider-runnable-track {
+    height: 8px;
+
+    border-radius: 7px;
+    background-color: var(--clr-volume-range);
+
+    transition: background 0.5s linear;
 }
 
 /* player ============================== */
@@ -849,7 +890,7 @@ body::after {
     font-weight: var(--fw-light);
 }
 
-.player__volume {
+/* .player__volume {
     appearance: none;
 
     width: 8rem;
@@ -883,7 +924,7 @@ body::after {
     background-color: var(--clr-volume-range);
 
     transition: background 0.5s linear;
-}
+} */
 
 .player__volume:focus {
     outline: none;
