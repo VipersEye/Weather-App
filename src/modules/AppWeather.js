@@ -1,6 +1,8 @@
 export default class AppWeather {
 
-    constructor() {
+    constructor() {}
+
+    start() {
         this.settings = settings;
         this.position = null;
         this.city = null;
@@ -22,7 +24,7 @@ export default class AppWeather {
                 }
             );
         } ).then( () => {
-            this.startApp();
+            this.setDataUpdaters();
         } ).catch( async (error) => {
             await this.showAlert('alert', `unknown error ${error.code}: ${error.message}`);
         } );
@@ -103,7 +105,7 @@ export default class AppWeather {
         this.city = cityName;
     }
 
-    async startApp() {
+    async setDataUpdaters() {
         console.log('start app');
         await this.updateWeather();
         this.setInitialStateChart();
@@ -261,11 +263,11 @@ export default class AppWeather {
                 if (error.message === 'city not found') {
                     await this.showAlert('alert', `${this.city} not found, try again`);
                     await this.requestCity();
-                    this.startApp();
+                    this.setDataUpdaters();
                 } else if (error.message === 'Failed to fetch') {
                     await this.showAlert('alert', 'Check your internet connection and try again');
                     await new Promise( (resolve) => setTimeout( () => resolve() , 60000) );
-                    this.startApp();
+                    this.setDataUpdaters();
                 } else {
                     this.showAlert('alert', 'Something went wrong :(');
                 }

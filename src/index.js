@@ -9,9 +9,11 @@ import AppSlider from 'modules/AppSlider';
 
 const app = new App
     (
-        AppDate, 
-        AppWeather, 
-        AppAnimations, 
-        AppPlayer,
-        AppSlider
+        new AppDate(), 
+        new AppWeather(), 
+        new AppAnimations(), 
+        new AppPlayer(),
+        new AppSlider()
     );
+
+app.start();

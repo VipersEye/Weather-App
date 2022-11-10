@@ -1,5 +1,7 @@
 export default class AppDate {
-    constructor() {
+    constructor() {}
+
+    start() {
         this.updateTimeAndDate();
         this.updateAsideDays();
     }

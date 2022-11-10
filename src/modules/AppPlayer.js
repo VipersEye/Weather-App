@@ -1,5 +1,7 @@
 export default class AppPlayer {
-    constructor() {
+    constructor() {}
+
+    start() {
         this.trackNames = [
             'Lofi Fruits Music Chill Fruits Music - Take Me To Church',
             'LoFi Waiter - Cosy Rain',

@@ -1,5 +1,7 @@
 export default class AppAnimations {
-    constructor() {
+    constructor() {}
+
+    start() {
         this.setAnimations();
     }
 

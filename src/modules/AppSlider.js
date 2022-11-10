@@ -1,5 +1,7 @@
 export default class AppSlider {
-    constructor() {
+    constructor() {}
+
+    start() {
         const creatingSlidesAndBtns = () => {
             let [theme] = document.documentElement.classList;
             let slider = document.querySelector('.weather__images-slider');
@@ -24,7 +26,6 @@ export default class AppSlider {
 
                 btnsSliderContainer.appendChild(sliderBtn);
             }
-
         };
 
         this.slides = {

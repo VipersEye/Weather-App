@@ -1,28 +1,18 @@
 export default class App {
-    static #instance = null;
 
     constructor(
-        AppDate, 
-        AppWeather, 
-        AppAnimations, 
-        AppPlayer, 
-        AppSlider
-    ) {
-        // singleton
+        dateModule, 
+        weatherModule, 
+        animationsModule, 
+        playerModule, 
+        sliderModule
+    ) { 
 
-        if (App.#instance) return App.#instance;
-        App.#instance = this; 
-
-        // settings
-
-        (async () => {
-            await this.setInitialSettings();
-            this.date = new AppDate();
-            this.weather = new AppWeather();
-            this.animations = new AppAnimations();
-            this.player = new AppPlayer();
-            this.slider = new AppSlider();
-        })();
+        this.date = dateModule;
+        this.weather = weatherModule;
+        this.animations = animationsModule;
+        this.player = playerModule;
+        this.slider = sliderModule;
 
         // listeners
 
@@ -145,6 +135,15 @@ export default class App {
 
         let closeSettingsBtn = document.querySelector('.settings__btn_close');
         closeSettingsBtn.addEventListener('click', this.closeSettings);
+    }
+
+    async start() {
+        await this.setInitialSettings();
+        this.date.start();
+        this.weather.start();
+        this.animations.start();
+        this.player.start();
+        this.slider.start();
     }
 
     async setInitialSettings() {
