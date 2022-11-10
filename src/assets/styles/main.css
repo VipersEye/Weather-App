@@ -890,42 +890,6 @@ body::after {
     font-weight: var(--fw-light);
 }
 
-/* .player__volume {
-    appearance: none;
-
-    width: 8rem;
-    
-    background-color: transparent;
-}
-
-.player__volume::-webkit-slider-thumb {
-    appearance: none;
-    
-    margin-top: -9px;
-    width: 25px;
-    height: 25px;
-
-    border-radius: 50%;
-    border: 4px solid var(--clr-primary-300);
-    background-color: var(--clr-primary-400);
-    cursor: pointer;
-
-    transition: background 0.2s linear;
-}
-
-.player__volume::-webkit-slider-thumb:hover {
-    background-color: var(--clr-primary-300);
-}
-
-.player__volume::-webkit-slider-runnable-track {
-    height: 8px;
-
-    border-radius: 7px;
-    background-color: var(--clr-volume-range);
-
-    transition: background 0.5s linear;
-} */
-
 .player__volume:focus {
     outline: none;
 }
@@ -1110,11 +1074,14 @@ body::after {
     transform: translateX(-50%);
 }
 
-.icon-moon {
+.icon-chart {
     width: 3rem;
     height: 3rem;
 
     border-radius: 50%;
+}
+
+.icon-chart_moon {
     background-color: var(--clr-moon);
 }
 
@@ -1130,8 +1097,8 @@ body::after {
     animation-iteration-count: infinite;
 }
 
-.moon-rotate {
-    animation-name: moon-rotate;
+.icon-rotate {
+    animation-name: icon-rotate;
     animation-duration: 40s;
     animation-iteration-count: infinite;
 }
@@ -1292,7 +1259,7 @@ body::after {
     }
 }
 
-@keyframes moon-rotate {
+@keyframes icon-rotate {
     from {
         transform: rotate(0deg);
     }

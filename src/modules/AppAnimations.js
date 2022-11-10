@@ -143,13 +143,15 @@ export default class AppAnimations {
         let timeDelimiter = document.querySelector('#delimiter');
         timeDelimiter.classList.add('ticking');
 
-        let starIcons = document.querySelectorAll('.icon-star');
-        starIcons.forEach((starIcon, i) => {
-            starIcon.classList.add(`star-animation_${i + 1}`);
-        });
+        let chartIcon = document.querySelector('.icon-chart');
+        chartIcon.classList.add('icon-rotate');
 
-        let moonIcon = document.querySelector('.icon-moon');
-        moonIcon.classList.add('moon-rotate');
+        if (chartIcon.classList.contains('icon-chart_moon')) {
+            let starIcons = document.querySelectorAll('.icon-star');
+            starIcons.forEach((starIcon, i) => {
+                starIcon.classList.add(`star-animation_${i + 1}`);
+            });
+        }
     }
 
     turnOffAnimations() {
@@ -161,8 +163,8 @@ export default class AppAnimations {
             starIcon.classList.remove(`star-animation_${i + 1}`);
         });
 
-        let moonIcon = document.querySelector('.icon-moon');
-        moonIcon.classList.remove('moon-rotate');
+        let chartIcon = document.querySelector('.icon-chart');
+        chartIcon.classList.remove('icon-rotate');
     }
 
 }

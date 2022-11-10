@@ -187,6 +187,15 @@ export default class AppWeather {
 
         forecastDaylight.children[0].textContent = leftSideBlock;
         forecastDaylight.children[1].textContent = rightSideBlock;
+
+        
+        let mainChartIcon = document.querySelector('.icon-chart');
+        let currentIcon = leftSideBlock.includes('Sunrise') ? 'sun' : 'moon';
+        mainChartIcon.classList.remove('icon-chart_sun', 'icon-chart_moon');
+        mainChartIcon.classList.add(`icon-chart_${currentIcon}`);
+        mainChartIcon.src = `./images/icons/chart-icons/${currentIcon}.svg`;
+        mainChartIcon.alt = `${currentIcon} icon`;
+
         
         let percentCurrent = +( (currentTime - timeSortedArr[0]) / (timeSortedArr[1] - timeSortedArr[0]) ).toFixed(2);
         let degCurrent = +getComputedStyle(document.body).getPropertyValue('--chart-deg').slice(0, -3);

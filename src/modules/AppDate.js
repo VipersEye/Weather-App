@@ -4,6 +4,7 @@ export default class AppDate {
     start() {
         this.updateTimeAndDate();
         this.updateAsideDays();
+        document.documentElement.classList = [this.currentDate.daypart];
     }
 
     get currentDate() {
@@ -49,6 +50,7 @@ export default class AppDate {
         await new Promise( (resolve) => setTimeout(() => {
             resolve();
         }, 1000 - currentMs) );
+        document.documentElement.classList = [this.currentDate.daypart];
         for (let key in this.currentDate) {
             document.querySelector(`#${key}`).textContent = this.currentDate[key];
         }

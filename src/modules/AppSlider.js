@@ -29,6 +29,9 @@ export default class AppSlider {
         };
 
         this.slides = {
+            morning: 5,
+            afternoon: 3,
+            evening: 5,
             night: 5
         };
 
