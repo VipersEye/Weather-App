@@ -100,6 +100,24 @@ export default class AppAnimations {
             document.documentElement.style.setProperty('--main-clr', newColor);
         };
 
+        const changeBtnBg = (e) => {
+            let headerBtn = e.currentTarget;            
+            let bgToggler = headerBtn.querySelector('.btn-bg-toggler');
+            bgToggler.classList.add('header__btn-toggle');
+        };
+
+        const showNav = (e) => {
+            changeBtnBg(e);
+            let nav = document.querySelector('.nav');
+            nav.classList.toggle('nav_active');
+        };
+
+        const showWeather = (e) => {
+            changeBtnBg(e);
+            let forecast = document.querySelector('.forecast');
+            forecast.classList.toggle('forecast_active');
+        };
+
    
         let weatherParamSliders = document.querySelectorAll('.weather__home-item');
         weatherParamSliders.forEach( (weatherParamSlider) => {
@@ -114,13 +132,31 @@ export default class AppAnimations {
         blockTogglerOn.addEventListener('animationend', toggleContent);
         blockTogglerOff.addEventListener('animationend', toggleContentEnd);
 
+
         let navBtns = document.querySelectorAll('.nav__btn');
         navBtns.forEach((btn) => {
             btn.addEventListener('click', toggleContentStart);
         });
 
+
         let themeInputRange = document.querySelector('#input-theme');
         themeInputRange.addEventListener('input', changeAppTheme);
+
+
+        let headerBtns = document.querySelectorAll('.header__btn');
+        headerBtns.forEach((btn) => {
+            btn.addEventListener('animationend', (e) => {
+                e.currentTarget.classList.toggle('header__btn_active');
+                let bgToggler = e.currentTarget.querySelector('.btn-bg-toggler');
+                bgToggler.classList.remove('header__btn-toggle');
+            });
+            
+            if (btn.classList.contains('header__btn_nav')) {
+                btn.addEventListener('click', showNav);
+            } else if (btn.classList.contains('header__btn_weather')) {
+                btn.addEventListener('click', showWeather);
+            }
+        });
     }
 
     start() {

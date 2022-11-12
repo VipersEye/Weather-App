@@ -65,7 +65,7 @@ export default class AppDate {
             } else if (i === 1) {
                 forecastDays[i].textContent = 'Tomorrow';
             } else {
-                date.toLocaleDateString('en-EN', {weekday: 'long'});
+                forecastDays[i].textContent = date.toLocaleDateString('en-EN', {weekday: 'long'});
             }
             forecastDays[i].closest('.forecast__item').setAttribute('id', `forecast-${date.getDate()}`);
         }
