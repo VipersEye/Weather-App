@@ -1,0 +1,37 @@
+:root {
+    --fw-light: 200;
+    --fw-extra-light: 300;
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semi-bold: 600;
+
+    --ff-primary: 'Poppins', sans-serif;
+
+    --chart-deg: -123deg;
+    --message-width: 300px;
+    --toggler-radius: 1100px;
+    --range-saturation: 50%;
+    --new-track-time-pos: 5rem;
+    --main-clr: 252;
+
+    --clr-primary-800: hsl(var(--main-clr), 96%, 11%);
+    --clr-primary-700: hsl(var(--main-clr), 85%, 13.3%);
+    --clr-primary-600: hsl(var(--main-clr), 61%, 16%);
+    --clr-primary-500: hsl(var(--main-clr), 66%, 25%);
+    --clr-primary-400: hsl(var(--main-clr), 78%, 33%);
+    --clr-primary-300: hsl(var(--main-clr), 96%, 57%);
+    --clr-primary-200: hsl(var(--main-clr), 29%, 53%);
+
+    --clr-neutral-900: hsl(0, 0%, 0%);
+    --clr-neutral-600: hsl(0, 0%, 50%);
+    --clr-neutral-500: hsl(0, 0%, 80%);
+    --clr-neutral-400: hsl(0, 0%, 100%);
+
+    --clr-positive: hsl(124, 100%, 30%);
+    --clr-negative: hsl(0, 98%, 35%);
+
+    --clr-volume-range: hsl(var(--main-clr), var(--range-saturation), 57%);
+    --clr-decorate-c1: hsl(var(--main-clr), 50%, 28%, 0.2);
+    --clr-decorate-c2: hsl(var(--main-clr), 47%, 23%, 0.21);
+    --clr-moon: hsl(40, 85%, 57%);
+}

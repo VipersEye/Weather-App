@@ -29,7 +29,7 @@ export default class AppPlayer {
             this.currentTrack.volume = this.volume;
             let rangeColorSaturation = `${this.volume * 100}%`;
             document.documentElement.style.setProperty('--range-saturation', rangeColorSaturation);
-            document.querySelector('#btn-volume use').setAttribute('xlink:href',`#volume-icon-${this.volume > 0.66 ? 'high' : this.volume < 0.67 && this.volume > 0.33 ? 'medium' : this.volume < 0.34 && this.volume > 0 ? 'low' : 'mute'}`);
+            document.querySelector('#btn-volume use').setAttribute('xlink:href',`./images/icons/icons.svg#volume-icon-${this.volume > 0.66 ? 'high' : this.volume < 0.67 && this.volume > 0.33 ? 'medium' : this.volume < 0.34 && this.volume > 0 ? 'low' : 'mute'}`);
         };
         
         const changeMute = () => {
@@ -142,7 +142,7 @@ export default class AppPlayer {
         this.setTrackInfo();
         this.currentTrack.play();
 
-        document.querySelector('#btn-play use').setAttribute('xlink:href', '#pause-icon');
+        document.querySelector('#btn-play use').setAttribute('xlink:href', './images/icons/icons.svg#pause-icon');
 
         let progressBar = document.querySelector('.player__progress');
         let step = this.currentTrack.duration * 1000 / 1000;
@@ -161,7 +161,7 @@ export default class AppPlayer {
     pause() {
         this.currentTrack.pause();
 
-        document.querySelector('#btn-play use').setAttribute('xlink:href', '#play-icon');
+        document.querySelector('#btn-play use').setAttribute('xlink:href', './images/icons/icons.svg#play-icon');
         clearInterval(this.updater);
     }
 

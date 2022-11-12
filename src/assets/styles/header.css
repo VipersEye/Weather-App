@@ -1,0 +1,154 @@
+/* header =============================== */
+
+.header {
+    grid-column: 1 / 2;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.header__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.header__btn {
+    display: none;
+    visibility: hidden;
+    position: absolute;
+    z-index: 20;
+
+    width: 4.5rem;
+    height: 5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    border: 0;
+    background-color: var(--clr-primary-300);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.header__btn_active {
+    background-color: var(--clr-neutral-400);
+}
+
+.header__btn_nav {
+    left: 0;
+
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.header__btn_weather {
+    right: 0;
+
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+
+.header__btn-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+
+    fill: var(--clr-neutral-400);
+
+    transition: fill 0.45s linear;
+}
+
+.header__btn_active .header__btn-icon {
+    fill: var(--clr-primary-300);
+}
+
+.btn-bg-toggler {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    transform: translate3d(-50%, -50%, 0) scale(0);
+
+    width: 6.7rem;
+    height: 6.7rem;
+
+    border-radius: 50%;
+    background-color: var(--clr-neutral-400);
+}
+
+.header__btn_active .btn-bg-toggler {
+    background-color: var(--clr-primary-300);
+}
+
+.header__btn-toggle {
+    animation-name: btn-bg-toggle;
+    animation-duration: 0.45s;
+}
+
+@keyframes btn-bg-toggle {
+    from {
+        transform: translate3d(-50%, -50%, 0) scale(0);
+    }
+
+    to {
+        transform: translate3d(-50%, -50%, 0) scale(1);
+    }
+}
+
+.header__greating-time {
+    font-size: 2rem;
+    color: var(--clr-neutral-400);
+    font-weight: var(--fw-regular);
+}
+
+.header__greetings-day {
+    font-size: 1.5rem;
+    color: var(--clr-primary-200);
+}
+
+.header__date-time {
+    font-size: 3.3rem;
+    color: var(--clr-neutral-400);
+    line-height: 1.2;
+    font-weight: var(--fw-light);
+    text-align: right;
+    text-transform: uppercase;
+}
+
+.header__date-day {
+    font-size: 1.2rem;
+    color: var(--clr-primary-200);
+}
+
+.ticking {
+    animation-name: ticking;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes ticking {
+    from {
+        opacity: 1;
+    }
+
+    29% {
+        opacity: 1;
+    }
+
+    30% {
+        opacity: 0;
+    }
+
+    70% {
+        opacity: 0;
+    }
+
+    71% {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

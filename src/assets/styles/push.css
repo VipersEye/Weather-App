@@ -1,0 +1,168 @@
+.message {
+    position: absolute;
+    left: 50%;
+    top: 2rem;
+    
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 0.5rem;
+    max-width: 100vw;
+    width: 4rem;
+    height: 4rem;
+
+    border-radius: 3rem;
+
+    transform: translateX(-50%) scale(0);
+}
+
+.message__success {
+    background-color: var(--clr-positive);
+}
+
+.message__alert {
+    background-color: var(--clr-negative);
+}
+
+.message__img {
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 3rem;
+    height: 3rem;
+
+    border-radius: 50%;
+    background-color: var(--clr-neutral-400);
+}
+
+.message__icon {
+    width: 2rem;
+    height: 2rem;
+}
+
+.message__icon_success {
+    fill: var(--clr-positive);
+}
+
+.message__icon_alert {
+    fill: var(--clr-negative);
+}
+
+.message__text {
+    position: relative;
+    top: -1.3rem;
+    z-index: 10;
+
+    font-size: 1.5rem;
+    color: var(--clr-neutral-400);
+    font-weight: var(--fw-medium);
+
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+.show-message {
+    animation-name: show-message;
+    animation-duration: 4s;
+    animation-fill-mode: forwards;
+}
+
+.push {
+    animation-name: push;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+}
+
+.hide {
+    animation-name: hide;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes push {
+
+    30% {
+        width: 4rem;
+        transform: translateX(-50%) scale(1);
+    }
+
+    60% {
+        width: 4rem;
+        transform: translateX(-50%) scale(1);
+    }
+
+
+    to {
+        width: var(--message-width);
+        transform: translateX(-50%) scale(1);
+    }
+
+}
+
+@keyframes hide {
+    from {
+        width: var(--message-width);
+        transform: translateX(-50%) scale(1);
+    }
+
+    40% {
+        width: 4rem;
+        transform: translateX(-50%) scale(1);
+    }
+
+    70% {
+        width: 4rem;
+        transform: translateX(-50%) scale(1);
+    }
+
+    to {
+        width: 4rem;
+        transform: translateX(-50%) scale(0);
+    }
+
+}
+
+@keyframes show-message {
+    from {
+        opacity: 0;
+        visibility: hidden;
+        top: -1.3rem;
+    }
+
+    25% {
+        opacity: 1;
+        visibility: visible;
+        top: 0;
+    }
+
+    75% {
+        opacity: 1;
+        visibility: visible;
+        top: 0;
+    }
+
+    to {
+        opacity: 0;
+        visibility: hidden;
+        top: 1.3rem; 
+    }
+}
+
+@keyframes hide-message {
+    from {
+        opacity: 1;
+        visibility: visible;
+        top: 0;
+    }
+
+    to {
+        opacity: 0;
+        visibility: hidden;
+        top: 1.3rem; 
+    }
+}

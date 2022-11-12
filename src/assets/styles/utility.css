@@ -1,0 +1,8 @@
+.content_show {
+    visibility: visible;
+}
+
+.content_hidden {
+    display: none;
+    visibility: hidden;
+}

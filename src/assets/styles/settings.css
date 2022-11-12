@@ -1,0 +1,203 @@
+/* settings =========================== */
+
+.weather__settings {
+    padding: 0 1.5rem;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.settings__item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 1.5rem;
+}
+
+.settings__label {
+    font-size: 1.4rem;
+    color: var(--clr-neutral-400);
+    font-weight: var(--fw-medium);
+}
+
+.settings__input:not([type="radio"]) {
+    width: 35%;
+}
+
+/* input text =============================== */
+
+.settings__input_text {
+    padding: 0.25rem 0.5rem;
+    width: 35%;
+    
+    font-size: 1.2rem;
+    line-height: 1;
+    color: var(--clr-neutral-400);
+    text-align: right;
+
+    border: 0;
+    border-bottom: 3px solid var(--clr-primary-200);
+    background-color: transparent;
+
+    transition: border 0.3s linear;
+}
+
+.settings__input_text:valid,
+.settings__input_text:focus {
+    border-color: var(--clr-primary-300);
+}
+
+/* input radio =============================== */
+
+.settings__radio-container {
+    display: flex;
+}
+
+.settings__input_radio {
+    appearance: none;
+}
+
+.settings__input_radio::after {
+    display: block;
+    padding: 0.5rem 2rem;
+
+    font-size: 1.2rem;
+    color: var(--clr-neutral-400);
+    font-weight: var(--fw-regular);
+    line-height: 1;
+
+    border: 4px solid var(--clr-primary-300);
+    background-color: transparent;
+    cursor: pointer;
+
+    transition: background 0.3s linear;
+}
+
+.settings__input_radio:checked::after {
+    background-color: var(--clr-primary-300);
+}
+
+.settings__input_radio[value="standard"]::after,
+.settings__input_radio[value="on"]::after {
+    border-top-left-radius: 0.7rem;
+    border-bottom-left-radius: 0.7rem;
+    border-right-width: 0;
+}
+
+.settings__input_radio[value="metric"]::after,
+.settings__input_radio[value="off"]::after {
+    border-top-right-radius: 0.7rem;
+    border-bottom-right-radius: 0.7rem;
+    border-left-width: 0;
+}
+
+.settings__input_radio[value="standard"]::after {
+    content: "kelvin";
+}
+
+.settings__input_radio[value="metric"]::after {
+    content: "celsius";
+}
+
+.settings__input_radio[value="on"]::after {
+    content: "on";
+}
+
+.settings__input_radio[value="off"]::after {
+    content: "off";
+}
+
+/* input range =============================== */
+
+.settings__input_range {
+    appearance: none;
+
+    width: 8rem;
+    
+    background-color: transparent;
+}
+
+.settings__input_range::-webkit-slider-thumb {
+    appearance: none;
+    
+    margin-top: -9px;
+    width: 25px;
+    height: 25px;
+
+    border-radius: 50%;
+    border: 4px solid var(--clr-primary-300);
+    background-color: var(--clr-primary-400);
+    cursor: pointer;
+
+    transition: background 0.2s linear;
+}
+
+.settings__input_range::-webkit-slider-thumb:hover {
+    background-color: var(--clr-primary-300);
+}
+
+.settings__input_range::-webkit-slider-runnable-track {
+    height: 8px;
+
+    border-radius: 7px;
+    background-color: var(--clr-volume-range);
+
+    transition: background 0.5s linear;
+}
+
+/* btns */
+
+.settings__btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    margin-bottom: 2rem;
+}
+
+.settings__btn {
+    padding: 0.8rem 1.7rem;
+
+    font-size: 1.2rem;
+    font-weight: var(--fw-medium);
+    line-height: 1;
+
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+
+    transition: background-color 0.3s linear;
+}
+
+.settings__btn_apply {
+    color: var(--clr-neutral-400);
+
+    background-color: var(--clr-primary-300);
+}
+
+.settings__btn_apply:hover {
+    background-color: var(--clr-primary-400);
+}
+
+.settings__btn_apply:active {
+    background-color: var(--clr-primary-500);
+}
+
+.settings__btn_close {
+    color: var(--clr-neutral-900);
+
+    background-color: var(--clr-neutral-500);
+}
+
+.settings__btn_close:hover {
+    background-color: var(--clr-primary-200);
+}
+
+.settings__btn_close:active {
+    background-color: var(--clr-neutral-600);
+    
+}

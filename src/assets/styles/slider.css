@@ -1,0 +1,75 @@
+/* weather slider =========================== */
+
+.weather__images {
+    flex: 1 1 0;
+
+    position: relative;
+
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.weather__images.content_hidden {
+    display: block;
+    visibility: visible;
+}
+
+.weather__images-slider {
+    display: flex;    
+
+    width: 100%;
+    height: 100%;
+
+    background: linear-gradient(165deg, var(--clr-primary-500) 0%, var(--clr-primary-600) 100%);
+    
+    overflow: hidden;
+    scroll-behavior: smooth;
+}
+
+.weather__images-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.weather__images-item {
+    min-width: 100%;
+}
+
+.weather__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.weather__images-control {
+    position: absolute;
+    left: 50%;
+    bottom: 5%;
+    transform: translateX(-50%);
+
+    display: flex;
+    gap: 1rem;
+
+    opacity: 0;
+    visibility: hidden;
+}
+
+.content_show .weather__images-control {
+    opacity: 1;
+    visibility: visible;
+}
+
+.weather__images-btn {
+    width: 1.5rem;
+    height: 1.5rem;
+
+    border-radius: 50%;
+    border: 0;
+    background-color: var(--clr-primary-400);
+    cursor: pointer;
+
+    transition: border 0.3s linear;
+}
+
+.weather__images-btn_active {
+    border: 4px solid var(--clr-primary-300);
+}

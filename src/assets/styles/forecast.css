@@ -1,0 +1,294 @@
+/* forecast =========================== */
+
+.forecast {
+    grid-column: 2 / 3;
+    grid-row: 1 / -1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 3rem 3rem;
+    min-width: 446px;
+
+    background-color: var(--clr-primary-700);
+    border-radius: 2rem;
+}
+
+.forecast__city {
+    font-size: 2.5rem;
+    color: var(--clr-primary-200);
+    font-weight: var(--fw-medium);
+    text-align: center;
+}
+
+.forecast__header {
+    margin-bottom: 2rem;
+
+    font-size: 2rem;
+    color: var(--clr-neutral-400);
+    font-weight: var(--fw-regular);
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.forecast__content {
+    margin-bottom: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.forecast__item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.forecast__img {
+    width: 3rem;
+    height: 3rem;
+}
+
+.forecast__day {
+    font-size: 1.2rem;
+    color: var(--clr-primary-200);
+}
+
+.forecast__weather {
+    font-size: 1.3rem;
+    color: var(--clr-neutral-400);
+}
+
+.forecast__temp {
+    margin-left: auto;
+
+    font-size: 1.4rem;
+    color: var(--clr-neutral-400);
+    font-weight: var(--fw-medium);
+}
+
+.forecast__chart {
+    position: relative;
+
+    height: 6rem;
+
+    overflow: hidden;
+}
+
+.forecast__circle {
+    position: absolute;
+    left: 50%;
+
+    border-radius: 50%;
+}
+
+.forecast__circle_dashed,
+.forecast__circle_current {
+    top: 1.5rem;
+
+    width: 40rem;
+    height: 40rem;
+
+    transform: translateX(-50%);
+}
+
+.forecast__circle_dashed {
+    border: 3px dashed var(--clr-primary-200);
+}
+
+.forecast__circle_current {
+    background-image: linear-gradient(var(--chart-deg), transparent 50%, var(--clr-neutral-400) 50%);
+}
+
+.forecast__circle_inner {
+    position: relative;
+    top: 50%;
+    z-index: 1000;
+
+    width: 39.7rem;
+    height: 39.7rem;
+
+    background-color: var(--clr-primary-700);
+
+    transform: translate3d(-50%, -50%, 0) rotate(calc(var(--chart-deg) + 90deg));
+}
+
+.forecast__chart-moon {
+    position: absolute;
+    top: -1.5rem;
+    left: 50%;
+    z-index: 1;
+
+    transform: translateX(-50%);
+}
+
+.icon-chart {
+    width: 3rem;
+    height: 3rem;
+
+    border-radius: 50%;
+}
+
+.icon-chart_moon {
+    background-color: var(--clr-moon);
+}
+
+.icon-star {
+    position: absolute;
+    z-index: 10;
+
+    width: 0.8rem;
+    height: 0.8rem;
+    
+    opacity: 0;
+
+    animation-iteration-count: infinite;
+}
+
+.icon-rotate {
+    animation-name: icon-rotate;
+    animation-duration: 40s;
+    animation-iteration-count: infinite;
+}
+
+.star-animation_1 {
+    top: -0.5rem;
+    left: -0.5rem;
+
+    animation-name: star-1;
+    animation-duration: 3s;
+}
+
+.star-animation_2 {
+    top: 2rem;
+    left: 0.4rem;
+
+    animation-name: star-2;
+    animation-duration: 3s;
+    animation-delay: 5s;
+}
+
+.star-animation_3 {
+    top: 0.5rem;
+    left: 0.9rem;
+
+    animation-name: star-3;
+    animation-duration: 3s;
+    animation-delay: 1s;
+}
+
+.star-animation_4 {
+    top: 2.5rem;
+    left: 2.5rem;
+
+    animation-name: star-4;
+    animation-duration: 3s;
+    animation-delay: 4s;
+}
+
+.star-animation_5 {
+    top: 0rem;
+    left: 1.9rem;
+
+    animation-name: star-5;
+    animation-duration: 3s;
+    animation-delay: 2s;
+}
+
+.forecast__daylight-times {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.forecast__time {
+    font-size: 1.2rem;
+    color: var(--clr-primary-200);
+}
+
+@keyframes star-1 {
+    from {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    to{
+        top: 0rem;
+        opacity: 0;
+    }
+}
+
+@keyframes star-2 {
+    from {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    to{
+        top: 2.5rem;
+        opacity: 0;
+    }
+}
+
+@keyframes star-3 {
+    from {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    to{
+        top: 1rem;
+        opacity: 0;
+    }
+}
+
+@keyframes star-4 {
+    from {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    to{
+        top: 3rem;
+        opacity: 0;
+    }
+}
+
+@keyframes star-5 {
+    from {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    to{
+        top: 0.5rem;
+        opacity: 0;
+    }
+}
+
+@keyframes icon-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

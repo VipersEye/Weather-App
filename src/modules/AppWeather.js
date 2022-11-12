@@ -73,10 +73,8 @@ export default class AppWeather {
         modalCityHeader.textContent = 'Enter the name of your city';
         modalCityInput.value = '';
         modalCity.showModal();
-        console.log('show');
         await new Promise( (resolve) => {
             const checkCityNameValidity = () => {
-                console.log('modal click city');
                 let errorMessage = '';
                 let cityName = modalCityInput.value;
                 switch (true) {
@@ -98,7 +96,6 @@ export default class AppWeather {
             };
 
             modalCityBtn.addEventListener('click', checkCityNameValidity);
-            console.log('eventL');
         } );
 
         let cityName = modalCityInput.value;
@@ -106,7 +103,6 @@ export default class AppWeather {
     }
 
     async setDataUpdaters() {
-        console.log('start app');
         await this.updateWeather();
         this.setInitialStateChart();
 
@@ -121,14 +117,12 @@ export default class AppWeather {
     }
 
     async updateWeather() {
-        console.log('update weather');
         await this.setWeather();
         this.updateCurrentWeather();
         this.updateForecastWeather();
     }
 
     async updateForecastWeather() {
-        console.log('updateForecast');
         document.querySelector('#current-city').textContent = this.weatherData.city;
         document.querySelector('#current-weather').textContent = this.weatherData.current.weather;
 
@@ -148,7 +142,6 @@ export default class AppWeather {
     }
 
     updateCurrentWeather() {
-        console.log('updateCurrent');
         for (let param in this.weatherData.difference) {
             for (let paramType in this.weatherData.difference[param]) {
                 let weatherParameterCurrent = document.querySelector(`#current-${param}-${paramType}`);
@@ -166,12 +159,7 @@ export default class AppWeather {
         }        
     }
 
-    async setInitialStateChart() {
-
-        // console.log('ini');
-        
-        // let currentTime = new Date(  new Date().setMinutes( new Date().getMinutes() - 300) );
-        // console.log(currentTime);
+    async setInitialStateChart() {        
         let currentTime = new Date();
         let {sunset, sunrise} = this.weatherData.current.time;
 
@@ -202,28 +190,17 @@ export default class AppWeather {
         degCurrent = degCurrent + (67 * percentCurrent);
         document.documentElement.style.setProperty('--chart-deg', `${degCurrent}deg`);
 
-        // console.log(percentCurrent, degCurrent);
-
         let percentRest = +(1 - percentCurrent).toFixed(2);
         let degRest = 67 * percentRest;
         let timeRest = timeSortedArr[1] - currentTime;
         let timeStep = timeRest / degRest / 10;
         const degStep = 0.1;
 
-
-        // console.log(percentRest, degRest, timeRest, timeStep);
-        // console.log(degStep * (timeRest / timeStep) , degRest);
-        // console.log(degRest / degStep * timeStep , timeRest);
-
         const updateChart = () => {
             degCurrent += degStep;
             document.documentElement.style.setProperty('--chart-deg', `${degCurrent}deg`);
             let timerId = setTimeout(() => {
-                // console.log(new Date());
-                // console.log(timeSortedArr[1]);
-                // console.log(degCurrent);
                 if (degCurrent > -56 && new Date() >= timeSortedArr[1]) {
-                    // console.log(new Date());
                     clearTimeout(timerId);
                     this.setInitialStateChart();
                } else updateChart(); 
@@ -234,8 +211,6 @@ export default class AppWeather {
     }
 
     async setWeather() {
-
-        console.log('set weather');
 
         const generateFetchURL = (type) => {
             let url = new URL(`https://api.openweathermap.org/data/2.5/${type}`);           
@@ -261,10 +236,7 @@ export default class AppWeather {
                 let urlForecast = generateFetchURL('forecast');
                 let responseForecast = await fetch(urlForecast);
                 let forecast = await responseForecast.json();
-    
-                // console.log(weather);
-                // console.log(forecast);
-    
+        
                 return {weather, forecast};
     
             } catch (error) {
@@ -442,7 +414,6 @@ export default class AppWeather {
                     };
                 }
             }
-            console.log(weatherData);
             return weatherData;
         };
     

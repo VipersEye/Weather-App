@@ -39,11 +39,8 @@ export default class App {
             modalUsernameHeader.textContent = 'Enter your name';
             modalUsernameInput.value = '';
             modalUsername.showModal();
-            console.log('show modal');
             await new Promise( (resolve) => {
-                const modalEventListener = () => {
-                    console.log('modal click username');
-                    
+                const modalEventListener = () => {                    
                     if (this.checkUsernameValidity(modalUsernameInput)) {
                         modalUsernameBtn.removeEventListener('click', modalEventListener);
                         resolve();
@@ -51,7 +48,6 @@ export default class App {
                 };
 
                 modalUsernameBtn.addEventListener('click', modalEventListener);
-                console.log('eventL');
             } );
             return modalUsernameInput.value;
         };
@@ -77,7 +73,7 @@ export default class App {
         document.documentElement.style.setProperty('--main-clr', settings.theme);
         document.querySelector('#input-volume').value = settings.volume;
         document.documentElement.style.setProperty('--range-saturation', `${settings.volume * 100}%`);
-        document.querySelector('#btn-volume use').setAttribute('xlink:href',`#volume-icon-${settings.volume > 0.66 ? 'high' : settings.volume < 0.67 && settings.volume > 0.33 ? 'medium' : settings.volume < 0.34 && settings.volume > 0 ? 'low' : 'mute'}`);
+        document.querySelector('#btn-volume use').setAttribute('xlink:href',`./images/icons/icons.svg#volume-icon-${settings.volume > 0.66 ? 'high' : settings.volume < 0.67 && settings.volume > 0.33 ? 'medium' : settings.volume < 0.34 && settings.volume > 0 ? 'low' : 'mute'}`);
     }
 
     checkUsernameValidity(usernameInput) {
