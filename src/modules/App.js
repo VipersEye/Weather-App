@@ -1,18 +1,18 @@
+import AppDate from 'modules/AppDate';
+import AppWeather from 'modules/AppWeather';
+import AppAnimations from 'modules/AppAnimations';
+import AppPlayer from 'modules/AppPlayer';
+import AppSlider from 'modules/AppSlider';
+
 export default class App {
 
-    constructor(
-        dateModule, 
-        weatherModule, 
-        animationsModule, 
-        playerModule, 
-        sliderModule
-    ) { 
+    constructor() {
 
-        this.date = dateModule;
-        this.weather = weatherModule;
-        this.animations = animationsModule;
-        this.player = playerModule;
-        this.slider = sliderModule;
+        this.date = new AppDate(),
+        this.weather = new AppWeather();
+        this.animations = new AppAnimations();
+        this.player = new AppPlayer();
+        this.slider = new AppSlider();
 
         let applySettingsBtn = document.querySelector('.settings__btn_apply');
         applySettingsBtn.addEventListener('click', this.applySettings.bind(this));
@@ -40,11 +40,11 @@ export default class App {
             modalUsernameInput.value = '';
             modalUsername.showModal();
             await new Promise( (resolve) => {
-                const modalEventListener = () => {                    
+                const modalEventListener = () => {
                     if (this.checkUsernameValidity(modalUsernameInput)) {
                         modalUsernameBtn.removeEventListener('click', modalEventListener);
                         resolve();
-                    }; 
+                    };
                 };
 
                 modalUsernameBtn.addEventListener('click', modalEventListener);
@@ -91,7 +91,7 @@ export default class App {
         }
         usernameInput.setCustomValidity(errorMessage);
         return usernameInput.reportValidity();
-    }    
+    }
 
     async applySettings() {
         const storeSettings = () => {
@@ -100,7 +100,7 @@ export default class App {
             let animations = document.querySelector('.settings__input_radio[name="animations"]:checked').value === 'on';
             let theme = +document.querySelector('#input-theme').value;
             let volume = +document.querySelector('#input-volume').value;
-            
+
             let settings = {
                 username,
                 units,

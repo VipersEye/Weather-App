@@ -6,25 +6,9 @@ const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const EslintWebpackPlugin = require('eslint-webpack-plugin');
 
-const isDev = process.env.NODE_ENV === 'development';
-const isProd = !isDev;
-const optimization = () => {
-    if (isDev) {
-        return undefined
-    }
-    return {
-        minimizer: [
-            new TerserWebpackPlugin(),
-            new CssMinimizerWebpackPlugin()
-        ]
-    }
-};
-console.log('isDev', isDev);
-console.log('isProd', isProd);
-
 /** @type {import('webpack').Configuration}*/
 
-module.exports = {
+const config = {
     context: path.resolve(__dirname, 'src'),
     mode: 'development',
     entry: {
@@ -42,8 +26,11 @@ module.exports = {
             'styles': path.resolve(__dirname, 'src/assets/styles')
         }
     },
-    optimization: optimization(),
-    devtool: isDev ? 'source-map' : undefined,
+    devServer: {
+        static: path.resolve(__dirname, 'dist'),
+        hot: true,
+        watchFiles: ['src/*.html']
+    },
     plugins: [
         new HTMLWebpackPlugin({
             template: './index.html'
@@ -77,4 +64,24 @@ module.exports = {
             }
         ]
     }
+};
+
+module.exports = (env, argv) => {
+    console.log(argv.mode);
+    if (argv.mode === 'development') {
+        config.devtool = 'source-map';
+        config.optimization = {
+            minimize: false
+        };
+    }
+    if (argv.mode === 'production') {
+        config.optimization = {
+            minimize: true,
+            minimizer: [
+                new TerserWebpackPlugin(),
+                new CssMinimizerWebpackPlugin()
+            ]
+        };
+    }
+    return config;
 };
